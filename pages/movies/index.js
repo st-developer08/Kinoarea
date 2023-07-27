@@ -1,31 +1,33 @@
 import { header } from "../../modules/header";
 import { useHttp } from "../../modules/https.request";
+import { img } from "../../modules/reload";
+import { movie } from "../../modules/requests";
+
 
 header()
 
+let name = document.querySelector(".name")
+let genres = document.querySelector(".genres")
+let image = document.querySelector(".img")
+let genr_arr = []
 const movie_id = location.search.split('=').at(-1)
+
 
 const { request } = useHttp()
 
 request(`/movie/${movie_id}`, 'get')
-    .then(res => console.log(res.data))
+    .then(res => {
+        setTimeout(() => {
+            if (res.status !== 200 && res.status !== 201) {
+                location.assign('/pages/movies/?id=' + movie_id)
+            }
+        }, 500);
+        console.log(res.data);
+        name.innerHTML = res.data.original_title
 
-//     import axios from 'axios';
+        genres.innerHTML = res.data.genres[0].name || "genre" + ', ' + res.data.genres[1].name || "genre" + ', ' + res.data.genres[2].name || "genre"
 
-// const options = {
-//     method: 'GET',
-//     url: `https://api.themoviedb.org/3/movie/${movie_id}`,
-//     headers: {
-//         accept: 'application/json',
-//         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMmRhODA1NGUyN2ExZTk1YTJhMTJkZDE5OThjYWZiYiIsInN1YiI6IjY0YmU3MzQzZTlkYTY5MDEwZDQxOTAxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.L7H6NDnAI8ToptlYW-nNps0pq-TcMn_e0IwlZDIBjkI'
-//     }
-// };
+        image.src = `${img + res.data.backdrop_path}`
+    })
 
-// axios
-//     .request(options)
-//     .then(function (response) {
-//         console.log(response.data);
-//     })
-//     .catch(function (error) {
-//         console.error(error);
-//     });
+movie(movie_id)

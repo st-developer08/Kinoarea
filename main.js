@@ -1,7 +1,7 @@
 import { header } from "./modules/header";
 import { useHttp } from "./modules/https.request";
 import { reloadCards, reloadTrailers } from "./modules/reload";
-import axios from "axios"
+import { popular } from "./modules/requests";
 
 let body = document.body
 
@@ -44,23 +44,7 @@ request(`/movie/popular`, 'get')
         reloadTrailers(res.data.results, some_trailers)
     })
 
-const options = {
-    method: 'GET',
-    url: 'https://api.themoviedb.org/3/movie/popular',
-    headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMmRhODA1NGUyN2ExZTk1YTJhMTJkZDE5OThjYWZiYiIsInN1YiI6IjY0YmU3MzQzZTlkYTY5MDEwZDQxOTAxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.L7H6NDnAI8ToptlYW-nNps0pq-TcMn_e0IwlZDIBjkI'
-    }
-};
-
-axios
-    .request(options)
-    .then(function (response) {
-        console.log(response.data);
-    })
-    .catch(function (error) {
-        console.error(error);
-    });
+popular()
 
 let tabs_genre = document.querySelectorAll(".tabs li")
 let tabs_time = document.querySelectorAll(".tabs_time li")
