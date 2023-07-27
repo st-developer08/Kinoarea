@@ -22,7 +22,6 @@ export function movie(id) {
 
 }
 export function popular() {
-
     const options = {
         method: 'GET',
         url: 'https://api.themoviedb.org/3/movie/popular',

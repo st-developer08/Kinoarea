@@ -38,3 +38,19 @@ export const useHttp = () => {
         request
     }
 }
+
+
+export let getDetails = async (path) => {
+    try {
+        const res = await axios.get(baseURL + path, {
+            headers: {
+                Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+                Accept: 'application/json'
+            }
+        })
+
+        return res
+    } catch (e) {
+        console.log(e);
+    }
+}
