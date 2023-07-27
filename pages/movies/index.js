@@ -9,6 +9,7 @@ header()
 let name = document.querySelector(".name")
 let genres = document.querySelector(".genres")
 let image = document.querySelector(".img")
+let link = document.querySelector(".see")
 let genr_arr = []
 const movie_id = location.search.split('=').at(-1)
 
@@ -28,6 +29,7 @@ request(`/movie/${movie_id}`, 'get')
         genres.innerHTML = res.data.genres[0].name || "genre" + ', ' + res.data.genres[1].name || "genre" + ', ' + res.data.genres[2].name || "genre"
 
         image.src = `${img + res.data.backdrop_path}`
+        link.href = `${res.data.homepage}`
     })
 
 movie(movie_id)
