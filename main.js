@@ -18,6 +18,11 @@ let box_office = document.querySelector(".box_office")
 
 request(`/movie/popular`, 'get')
     .then(res => {
+        setTimeout(() => {
+            if (res.status !== 200 && res.status !== 201) {
+                location.assign('/')
+            }
+        }, 500);
 
         reloadCards(res.data.results.slice(0, 8), cards)
         reloadCards(res.data.results.slice(9, 13), popular_films)
