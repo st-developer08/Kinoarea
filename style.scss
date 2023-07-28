@@ -345,6 +345,7 @@ body {
         width: 100%;
         max-width: 250.401px;
 
+
         .card_img {
             position: relative;
             border-radius: 10px;
@@ -404,9 +405,15 @@ body {
         }
 
         .title {
-            font-style: normal;
             font-weight: 500;
-            line-height: normal;
+            width: 250.401px;
+            overflow: auto;
+            white-space: nowrap;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
         }
 
         .genres {
@@ -465,6 +472,20 @@ body {
     .rate {
         display: none;
     }
+
+    .card {
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: -5px;
+            width: 10px;
+            height: 35px;
+            background: linear-gradient(95deg, transparent, #151a26, #151A26);
+        }
+    }
 }
 
 
@@ -516,57 +537,11 @@ body {
 
 .trailers_player {
     background: #000;
+    width: 100%;
     height: 600px;
-    background: lightgray;
-    background-image: url("/images/faf.png");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-    border-radius: 10px;
     transition: .5s linear;
-
-    .trailers_player_btn {
-        all: unset;
-
-        cursor: pointer;
-        position: absolute;
-        @include flex();
-        top: 50%;
-        left: 50%;
-        translate: -50% -50%;
-        border-radius: 5px;
-        transition: .3s;
-        width: 100px;
-        height: 100px;
-        border-radius: 100%;
-        background-image: url("/icons/play.svg");
-        background-position: center;
-        background-size: 50px;
-        background-repeat: no-repeat;
-        // &::after {
-        //     content: '';
-        //     position: absolute;
-        //     top: 20%;
-        //     left: 30%;
-        //     border: 30px solid transparent;
-        //     border-left: 50px solid white;
-        // }
-
-        &:hover {
-            background: #00000083;
-            background-image: url("/icons/play.svg");
-            background-position: center;
-            background-size: 50px;
-            background-repeat: no-repeat;
-        }
-
-        &:active {
-            scale: .7;
-        }
-    }
-
     margin-bottom: 20px;
+    border-radius: 10px;
 }
 
 .subline {
@@ -1087,4 +1062,19 @@ center {
     .img {
         border-radius: 10px;
     }
+
+}
+
+.genres_cont {
+    @include flex();
+    justify-content: start;
+    gap: 5px;
+    width: 250.401px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    white-space: nowrap;
 }

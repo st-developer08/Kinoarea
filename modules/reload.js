@@ -1,3 +1,6 @@
+import { all } from "axios"
+import { getDetails } from "./https.request"
+
 export let img = import.meta.env.VITE_BASE_IMG
 
 export function reloadCards(arr, place) {
@@ -11,7 +14,7 @@ export function reloadCards(arr, place) {
         let after = document.createElement("div")
         let span = document.createElement("span")
         let title = document.createElement("h3")
-        let genres = document.createElement("p")
+        let genres_cont = document.createElement("div")
 
         card.className = "card"
         card_img.className = "card_img"
@@ -27,10 +30,27 @@ export function reloadCards(arr, place) {
         title.className = "title"
         title.innerHTML = item.title
 
-        genres.className = "genres"
-        genres.innerHTML = item.genre_ids
+        genres_cont.className = "genres_cont"
 
-        card.append(card_img, title, genres)
+        getDetails(`/movie/${item.id}`)
+            .then(res => {
+                const { data: { genres } } = res
+
+                for (let gen of genres) {
+                    gen.className = "genres"
+                    genres_cont.innerHTML += `
+                    <p class="genres">${gen.name},</p>
+                `
+                }
+
+                let all_genres = genres_cont.querySelectorAll(".genres")
+
+                all_genres[all_genres.length - 1].innerHTML = all_genres[all_genres.length - 1].innerHTML.replace(",", ".")
+            })
+
+
+
+        card.append(card_img, title, genres_cont)
         card_img.append(rate, after)
         after.append(span)
         place.append(card)
@@ -51,7 +71,7 @@ let trailers_rate_d = document.querySelector(".dislike .counter")
 export function reloadTrailers(arr, place) {
     place.innerHTML = "";
 
-    let trailer_images = []; 
+    let trailer_images = [];
 
     for (let item of arr) {
         let trailer = document.createElement("div");
@@ -74,13 +94,18 @@ export function reloadTrailers(arr, place) {
             trailer_images.forEach(btn => btn.classList.remove("trailer-active"));
             trailer_img.classList.add("trailer-active");
 
-            setTimeout(() => {
-                trailers_player.style.backgroundImage = `url("${img + item.backdrop_path}")`;
-            }, 500);
-
             trailers_title.innerHTML = item.title;
             trailers_rate_l.innerHTML = item.vote_count;
             trailers_rate_d.innerHTML = Math.round(item.vote_count / 4);
+
+            getDetails(`/movie/${item.id}/videos`)
+                .then(res => {
+                    let videoObj = res.data.results[Math.floor(Math.random() * res.data.results.length - 1)]
+                    console.log(videoObj);
+
+                    trailers_player.src = `https://www.youtube.com/embed/${videoObj.key}`
+
+                })
         };
     }
 }

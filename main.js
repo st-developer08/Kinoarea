@@ -1,28 +1,19 @@
 import { header } from "./modules/header";
-import { useHttp } from "./modules/https.request";
+import { getDetails } from "./modules/https.request";
 import { reloadCards, reloadTrailers } from "./modules/reload";
-import { popular } from "./modules/requests";
 
 let body = document.body
 
 header()
 
-const { request } = useHttp()
-
 let some_trailers = document.querySelector(".some_trailers")
-let trailers_player_btn = document.querySelector(".trailers_player_btn")
 let popular_films = document.querySelector(".popular_films")
 let expected_novelties = document.querySelector(".expected_novelties")
 let box_office = document.querySelector(".box_office")
 
 
-request(`/movie/popular`, 'get')
+getDetails(`/movie/popular`)
     .then(res => {
-        setTimeout(() => {
-            if (res.status !== 200 && res.status !== 201) {
-                location.assign('/')
-            }
-        }, 500);
 
         reloadCards(res.data.results.slice(0, 8), cards)
         reloadCards(res.data.results.slice(9, 13), popular_films)
@@ -48,8 +39,6 @@ request(`/movie/popular`, 'get')
 
         reloadTrailers(res.data.results, some_trailers)
     })
-
-popular()
 
 let tabs_genre = document.querySelectorAll(".tabs li")
 let tabs_time = document.querySelectorAll(".tabs_time li")
@@ -129,3 +118,5 @@ for (let icon of sub_social_icons) {
     li_social.append(a_social)
     sub_social.append(li_social)
 }
+
+
