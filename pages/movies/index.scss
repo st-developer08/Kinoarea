@@ -1,0 +1,332 @@
+body {
+    background: #1E2538;
+    background-image: url("/images/joker.png");
+    background-position: 0 0;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+
+    transition: .5s linear;
+
+    &::-webkit-scrollbar {
+        height: 1px;
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+
+        }
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    // &::after {
+    //     content: "";
+    //     display: block;
+    //     width: 100%;
+    //     height: 500px;
+    //     position: absolute;
+    //     bottom: 0px;
+    //     z-index: -1;
+    //     background: linear-gradient(transparent, #1E2538);
+    // }
+
+    &::before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        z-index: -1;
+        background: #1e253893;
+    }
+}
+
+
+button {
+    all: unset;
+    cursor: pointer;
+}
+
+@mixin flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#IMDb,
+#kinoarea {
+    position: relative;
+    @include flex();
+    flex-direction: column;
+    gap: 5px;
+}
+
+.rate__counter {
+    @include flex();
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -65%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    z-index: -1;
+
+    span {
+        font-size: 10px;
+    }
+}
+
+.rate__counter_kinoarea {
+
+    background: #4bcb364d;
+}
+
+.rate__counter_IMDb {
+
+    background: #88cb3653;
+}
+
+.movie_info {
+    max-width: 890px;
+    margin: 0 auto;
+}
+
+.top_info {
+    margin-bottom: 40px;
+
+    .content {
+        @include flex();
+        gap: 30px;
+        margin-bottom: 30px;
+
+        .movie_img {
+            width: 100%;
+            max-width: 300px;
+            min-width: 300px;
+            height: 400px;
+
+            img {
+                border-radius: 10px;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .rates {
+            @include flex();
+            gap: 20px;
+            font-size: 12px;
+        }
+
+        .movie_text {
+            @include flex();
+            align-items: start;
+            flex-direction: column;
+            gap: 20px;
+
+            .path {
+                font-size: 12px;
+
+                .faded {
+                    opacity: 0.5;
+                }
+
+            }
+
+            .title {
+                font-weight: 600;
+                font-size: 32px;
+            }
+
+            .origin_title {
+                font-weight: 600;
+                font-size: 20px;
+            }
+
+            .description {
+                line-height: 20px;
+            }
+
+            .links_parent {
+                @include flex();
+                gap: 30px;
+                min-width: 350px;
+
+                button {
+                    a {
+                        @include flex();
+                        font-size: 12px;
+                        gap: 10px;
+                        padding: 15px 15px;
+                        border: 2px solid #FFF;
+                        border-radius: 10px;
+                        transition: .3s ease;
+                        opacity: .5;
+
+                        &:hover {
+                            opacity: 1;
+                        }
+                    }
+                }
+
+                .social {
+                    @include flex();
+
+                    width: 100%;
+                    max-width: 150px;
+                    justify-content: space-between;
+                    margin: 0 auto;
+
+                    li {
+                        opacity: .5;
+                        transition: .3s ease;
+                        width: 13px;
+
+                        &:hover {
+                            opacity: 1;
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+    }
+}
+
+.btns {
+    @include flex();
+    gap: 20px;
+    justify-content: start;
+
+    .like,
+    .dislike {
+        @include flex();
+        flex-direction: column;
+        gap: 15px;
+
+        border-radius: 10px;
+        transition: .3s ease;
+
+        &:hover {
+            scale: 1.2;
+        }
+
+        &:active {
+            scale: .7;
+        }
+
+        img {
+            width: 40px;
+        }
+    }
+}
+
+
+.statistic {
+    @include flex();
+    justify-content: start;
+    gap: 20px;
+
+    .like {
+        @include flex();
+        flex-direction: column;
+        gap: 15px;
+
+        border-radius: 10px;
+        transition: .3s ease;
+
+        &:hover {
+            scale: 1.2;
+        }
+
+        &:active {
+            scale: .7;
+        }
+
+        img {
+            widows: 40px;
+        }
+    }
+
+    font-size: 12px;
+
+    .expectation_rating {
+        position: relative;
+        padding: 13px 10px;
+        min-width: 180px;
+        min-height: 40px;
+        border-radius: 5px;
+        background: #1B2133;
+
+        span {
+            color: #57D043;
+            white-space: nowrap;
+            font-weight: 500;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 85%;
+            height: 100%;
+            border-radius: 5px;
+            background: #2E6125;
+        }
+    }
+}
+
+.bottom_info {
+    @include flex();
+    justify-content: space-between;
+    font-size: 12px;
+    gap: 50px;
+
+    .yellow {
+        cursor: pointer;
+        color: yellow;
+        text-decoration: underline;
+        transition: .3s ease;
+
+        &:hover {
+            opacity: .5;
+        }
+    }
+
+    ul {
+        @include flex();
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+        width: 50%;
+
+        li {
+            @include flex();
+            justify-content: start;
+            gap: 30px;
+            width: 100%;
+
+            span {
+                width: 100%;
+            }
+        }
+    }
+}

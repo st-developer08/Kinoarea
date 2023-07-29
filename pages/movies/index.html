@@ -6,36 +6,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.scss">
     <link rel="shortcut icon" href="/favicon/favicon.ico" type="image/x-icon">
-    <style>
-        .cards img {
-            width: 300px;
-            height: 300px;
-            object-fit: contain;
-        }
-    </style>
+    <link rel="stylesheet" href="/pages/movies/index.scss">
     <title>Movie info</title>
 </head>
 
 <body>
-    <center>
-        <h1 class="name">Barbie</h1>
-        <div class="genres">
+    <div class="container">
+        <div class="movie_info">
 
+            <div class="top_info">
+                <div class="content">
+
+                    <div class="movie_img">
+                        <img src="/public/images/person.png" alt="">
+                    </div>
+
+                    <div class="movie_text">
+
+                        <p class="path"><span class="faded">Home > Movies > </span><span class="endpoint">Escape from
+                                Pretoria</span></p>
+                        <h2 class="title">Escape from Pretoria</h2>
+                        <h3 class="original_title">Escape from Pretoria</h3>
+                        <div class="rates">
+                            <div id="kinoarea" style="width: 50px; height: 50px;">
+                                <canvas id="kinoareaChart"></canvas>
+                                <div class="rate__counter rate__counter_kinoarea"><span>8.70</span></div>
+                                <p>Kinoarea</p>
+                            </div>
+                            <div id="IMDb" style="width: 50px; height: 50px;">
+                                <canvas id="IMDbChart"></canvas>
+                                <div class="rate__counter rate__counter_IMDb"><span>6.70</span></div>
+                                <p>IMDb</p>
+                            </div>
+                        </div>
+                        <p class="description">
+                            Two freedom fighters are serving time in one of the most stringent prisons in the world - in
+                            "Pretoria". Together with other prisoners, they plan a daring and dangerous escape. But
+                            coming up with a plan is only the first step. The second step is the implementation of the
+                            plan.
+                        </p>
+                        <div class="links_parent">
+                            <button><a href="#"><img src="/icons/watch.svg" alt=""> Watch trailer</a></button>
+                            <ul class="social"></ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="statistic">
+                    <div class="btns">
+                        <button class="like"><img src="/public/icons/like.svg" alt=""></button>
+                        <button class="dislike"><img src="/public/icons/like.svg" alt=""></button>
+                    </div>
+                    <div class="expectation_rating">
+                        <div class="line"></div>
+                        <span>Expectation Rating 85%</span>
+                    </div>
+                    <button class="like"><img src="/public/icons/heart.svg" alt=""></button>
+                    <p>Favorited by 37933 people</p>
+                </div>
+            </div>
+
+            <div class="bottom_info">
+                <ul class="left">
+                    <li> <span class="regular">Year:</span> <span class="yellow">2023</span></li>
+                    <li> <span class="regular">A country:</span> <span class="yellow"> Великобритания, Австралия</span>
+                    </li>
+                    <li> <span class="regular">Tagline:</span> <span class="yellow">«Подбери ключ к свободе»</span></li>
+                    <li> <span class="regular">Director:</span> <span class="yellow"> Фрэнсис Аннан</span></li>
+                    <li> <span class="regular">Scenario:</span> <span class="yellow"> Фрэнсис Аннан, Л.Х. Адамс, Кэрол
+                            Гриффитс, ...</span></li>
+                    <li> <span class="regular">Producer:</span> <span class="yellow">Дэвид Баррон, Марк Блэйни, Гари
+                            Хэмилтон, ...</span></li>
+                    <li> <span class="regular">Operator:</span> <span class="yellow"> Джеффри Холл</span></li>
+                    <li> <span class="regular">Composer:</span> <span class="yellow"> Дэвид Хиршфелдер</span></li>
+                </ul>
+                <ul class="right">
+                    <li> <span class="regular">Artist:</span> <span class="yellow">2020</span></li>
+                    <li> <span class="regular">Installation:</span> <span class="yellow"> Великобритания,
+                            Австралия</span>
+                    </li>
+                    <li> <span class="regular">Genre:</span> <span class="yellow">«Подбери ключ к свободе»</span></li>
+                    <li> <span class="regular">Fees in the world:</span> <span class="yellow"> Фрэнсис Аннан</span></li>
+                    <li> <span class="regular">Premiere (world):</span> <span class="yellow"> Фрэнсис Аннан, Л.Х. Адамс,
+                            Кэрол
+                            Гриффитс, ...</span></li>
+                    <li> <span class="regular">Premiere (UZB):</span> <span class="yellow">Дэвид Баррон, Марк Блэйни,
+                            Гари
+                            Хэмилтон, ...</span></li>
+                    <li> <span class="regular">Age:</span> <span class="yellow"> Джеффри Холл</span></li>
+                    <li> <span class="regular">Time:</span> <span class="yellow"> Дэвид Хиршфелдер</span></li>
+                </ul>
+
+            </div>
         </div>
-        <img class="img" width="500" src="/images/faf.png" alt="">
-        <a class="see" target="_blank" href="#">Go to see</a>
-    </center>
-
-    <div class="cards">
-
     </div>
 
-    <embed src="" type="video/mp4" wmode="transparent" type="video/mp4" width="100%" height="100%"
-        allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="Keyboard Cat"></embed>
-
-    <!-- <iframe width="884" height="497" src="" allowfullscreen></iframe> -->
-
     <script type="module" src="index.js"></script>
+
 </body>
 
 </html>
