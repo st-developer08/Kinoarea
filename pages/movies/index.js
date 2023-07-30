@@ -1,9 +1,12 @@
-import { Chart } from "chart.js";
+import { Chart, registerables } from "chart.js";
 import { header } from "../../modules/header";
 import { getDetails } from "../../modules/https.request";
 import { img } from "../../modules/reload";
 
+Chart.register(...registerables)
+
 header()
+
 let body = document.body
 
 let social_icons = [
@@ -62,7 +65,7 @@ getDetails(`/movie/${movie_id}`)
         title.innerHTML = res.data.title
         original_title.innerHTML = res.data.original_title
         description.innerHTML = res.data.overview
-        counter_kinoarea.innerHTML = (res.data.vote_average + 2).toFixed(2) > 10 ? (res.data.vote_average + 2).toFixed(0) : (res.data.vote_average + 2).toFixed(2)
+        counter_kinoarea.innerHTML = (res.data.vote_average + 2).toFixed(2) > 10 ? 10 : (res.data.vote_average + 2).toFixed(2)
         counter_imdb.innerHTML = res.data.vote_average.toFixed(2)
         movie_img.src = `${img + res.data.poster_path}`
         watch.href = `${res.data.homepage}`

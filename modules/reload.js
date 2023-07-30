@@ -82,7 +82,7 @@ export function reloadTrailers(arr, place) {
         trailer_img.className = "trailer_img";
         trailer_title.className = "trailer_title";
 
-        trailer_img.style.backgroundImage = `url("${img + item.poster_path}")`;
+        trailer_img.style.backgroundImage = `url("${img + item.backdrop_path}")`;
         trailer_title.innerHTML = item.title;
 
         trailer.append(trailer_img, trailer_title);

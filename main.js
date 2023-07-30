@@ -10,33 +10,66 @@ let some_trailers = document.querySelector(".some_trailers")
 let popular_films = document.querySelector(".popular_films")
 let expected_novelties = document.querySelector(".expected_novelties")
 let box_office = document.querySelector(".box_office")
+let all_new = document.querySelector(".all_new")
 
+getDetails("/movie/now_playing")
+    .then(res => {
+        reloadCards(res.data.results.slice(0, 8), cards)
+
+        let cards_images = document.querySelectorAll(".card_img")
+
+        bodyBack(cards_images)
+
+        all_new.onclick = () => {
+
+            if (all_new.innerHTML === "All new") {
+                reloadCards(res.data.results, cards)
+                all_new.innerHTML = "Hide"
+
+                let cards_images = document.querySelectorAll(".card_img")
+                bodyBack(cards_images)
+
+            } else {
+                window.scrollTo({
+                    top: 70,
+                    behavior: 'smooth'
+                });
+
+                reloadCards(res.data.results.slice(0, 8), cards)
+                all_new.innerHTML = "All new"
+
+                let cards_images = document.querySelectorAll(".card_img")
+                bodyBack(cards_images)
+            }
+        }
+    })
+
+function bodyBack(arr) {
+
+    arr.forEach(card_img => {
+
+        let key = card_img.getAttribute("data-backdrop")
+
+        card_img.onmouseenter = () => {
+            setTimeout(() => {
+                body.style.backgroundImage = key
+            }, 500);
+        }
+
+        card_img.onmouseleave = () => {
+            body.style.backgroundImage = `url("/images/joker.png")`
+        }
+    })
+
+}
+getDetails("/movie/upcoming")
+    .then(res => reloadCards(res.data.results.slice(14, 18), expected_novelties))
 
 getDetails(`/movie/popular`)
     .then(res => {
 
-        reloadCards(res.data.results.slice(0, 8), cards)
         reloadCards(res.data.results.slice(9, 13), popular_films)
-        reloadCards(res.data.results.slice(14, 18), expected_novelties)
         reloadCards(res.data.results.slice(15, 20), box_office)
-
-        let cards_images = document.querySelectorAll(".card_img")
-
-        cards_images.forEach(card_img => {
-
-            let key = card_img.getAttribute("data-backdrop")
-
-            card_img.onmouseenter = () => {
-                setTimeout(() => {
-                    body.style.backgroundImage = key
-                }, 500);
-            }
-
-            card_img.onmouseleave = () => {
-                body.style.backgroundImage = `url("/images/joker.png")`
-            }
-        })
-
         reloadTrailers(res.data.results, some_trailers)
     })
 
