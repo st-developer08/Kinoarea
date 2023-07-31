@@ -703,9 +703,8 @@ body {
 }
 
 .popular_films {
-
+    min-height: 400px;
     margin-bottom: 40px;
-
 }
 
 .popular_films_slider {
@@ -742,8 +741,13 @@ body {
 
 .popular_persons {
     @include flex();
-    justify-content: space-between;
     margin-bottom: 40px;
+    gap: 32px;
+    
+    .first_places {
+        @include flex();
+        gap: 32px;
+    }
 
     .person {
         position: relative;
@@ -792,6 +796,11 @@ body {
     width: 340px;
     height: 340px;
     background: #1B2133;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
     li {
         @include flex();

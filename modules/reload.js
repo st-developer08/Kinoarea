@@ -1,5 +1,10 @@
-import { all } from "axios"
 import { getDetails } from "./https.request"
+
+let nums = []
+
+for (let i = 20; i < 45; i++) {
+    nums.push(i)
+}
 
 export let img = import.meta.env.VITE_BASE_IMG
 
@@ -22,7 +27,7 @@ export function reloadCards(arr, place) {
         card_img.setAttribute("data-backdrop", `url("${img + item.backdrop_path}")`)
 
         rate.className = "rate"
-        rate.innerHTML = item.vote_average
+        rate.innerHTML = item.vote_average.toFixed(2)
 
         after.className = "after"
         span.innerHTML = "Movie card"
@@ -142,22 +147,87 @@ export function reloadActors(arr, place) {
 
 export function getRandomElements(arr, count) {
     if (count >= arr.length) {
-      return arr.slice(); // Возвращаем копию исходного массива, если требуемое количество элементов больше или равно длине массива
+        return arr.slice(); // Возвращаем копию исходного массива, если требуемое количество элементов больше или равно длине массива
     }
-  
+
     const randomIndexes = [];
     const result = [];
-  
+
     while (randomIndexes.length < count) {
-      const randomIndex = Math.floor(Math.random() * arr.length);
-      if (!randomIndexes.includes(randomIndex)) {
-        randomIndexes.push(randomIndex);
-      }
+        const randomIndex = Math.floor(Math.random() * arr.length);
+        if (!randomIndexes.includes(randomIndex)) {
+            randomIndexes.push(randomIndex);
+        }
     }
-  
+
     for (const index of randomIndexes) {
-      result.push(arr[index]);
+        result.push(arr[index]);
     }
-  
     return result;
-  }
+
+}
+export function reloadPersons(arr, cont) {
+
+    cont.innerHTML = ""
+
+    for (let item of arr) {
+        let person = document.createElement("div")
+        let place = document.createElement("span")
+        let current_name = document.createElement("span")
+        let origin_name = document.createElement("span")
+        let age = document.createElement("span")
+
+        person.className = "person"
+        place.className = "place"
+        current_name.className = "current_name"
+        origin_name.className = "origin_name"
+        age.className = "age"
+
+
+        person.style.backgroundImage = `radial-gradient( rgba(245, 246, 252, 0),rgba(0, 0, 0, 0.73)),
+        url(${img + item.profile_path})`
+        person.style.backgroundPosition = "50% 30%"
+        person.style.backgroundSize = "cover"
+        person.style.backgroundRepeat = "no-repeat"
+
+        place.innerHTML = arr.indexOf(item) + 1 + " place"
+        current_name.innerHTML = item.name
+        origin_name.innerHTML = item.name
+        age.innerHTML = nums[Math.floor(Math.random() * nums.length)] + " years"
+
+        person.append(place, current_name, origin_name, age)
+        cont.append(person)
+    }
+
+}
+export function reloadOthers(arr, cont) {
+
+    cont.innerHTML = ""
+
+    for (let item of arr) {
+        let li = document.createElement("li")
+        let left = document.createElement("div")
+        let current_name = document.createElement("span")
+        let origin_name = document.createElement("span")
+        let age = document.createElement("span")
+        let right = document.createElement("div")
+        let place = document.createElement("span")
+
+        left.className = "left"
+        right.className = "right"
+        current_name.className = "current_name"
+        origin_name.className = "origin_name"
+        age.className = "age"
+        place.className = "place"
+
+        place.innerHTML = arr.indexOf(item) + 3 + " place"
+        current_name.innerHTML = item.name
+        origin_name.innerHTML = item.name
+        age.innerHTML = nums[Math.floor(Math.random() * nums.length)] + " years"
+
+        li.append(left, right)
+        left.append(current_name, origin_name, age)
+        right.append(place)
+        cont.append(li)
+    }
+}

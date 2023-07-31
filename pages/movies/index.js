@@ -60,6 +60,7 @@ const iframe = document.querySelector('.trailers_player')
 let actors_container = document.querySelector('.actors_container')
 let posters_container = document.querySelector('.posters_container')
 let stills_container = document.querySelector('.stills_container')
+let similar_films = document.querySelector('.similar_films')
 
 const movie_id = location.search.split('=').at(-1)
 
@@ -126,16 +127,25 @@ getDetails(`/movie/${movie_id}`)
                 }
             }
         });
+        let { data: { genres } } = res
 
+        getDetails("/movie/top_rated")
+            .then(second_res => {
+                let similar_arr = []
+                let { data: { results } } = second_res
 
-        // for (let gen of genres) {
-        //     genresDiv.innerHTML += `
-        //         <p class="genres">${gen.name}</p>
-        //     `
-        // }
+                const genreIdsSet = new Set(genres.map(genre => genre.id));
 
-        // image.src = `${img + res.data.backdrop_path}`
-        // link.href = `${res.data.homepage}`
+                results.forEach(item => {
+                    if (item.genre_ids.some(genreId => genreIdsSet.has(genreId))) {
+                        similar_arr.push(item);
+                    }
+                });
+
+                reloadCards(getRandomElements(similar_arr, 4), similar_films);
+                console.log(similar_arr);
+            });
+
     })
 
 getDetails(`/movie/${movie_id}/credits`)
@@ -145,7 +155,7 @@ getDetails(`/movie/${movie_id}/credits`)
 
 getDetails(`/movie/${movie_id}/videos`)
     .then(res => {
-        let videoObj = res.data.results[Math.floor(Math.random() * res.data.results.length - 1)]
+        let videoObj = res.data.results[Math.floor(Math.random() * (res.data.results.length - 1))]
         iframe.src = `https://www.youtube.com/embed/${videoObj.key}`
     })
 getDetails(`/movie/${movie_id}/images`)
@@ -158,7 +168,6 @@ getDetails(`/movie/${movie_id}/images`)
         }
         stills_container.innerHTML = ""
 
-        console.log(res.data.backdrops);
         for (let item of getRandomElements(res.data.backdrops, 6)) {
             let stills_item = document.createElement("div")
             stills_item.className = "stills_item"

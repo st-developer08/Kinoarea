@@ -1,9 +1,8 @@
 import { header } from "./modules/header";
 import { getDetails } from "./modules/https.request";
-import { reloadCards, reloadTrailers } from "./modules/reload";
+import { img, reloadCards, reloadOthers, reloadPersons, reloadTrailers } from "./modules/reload";
 
 let body = document.body
-
 
 header()
 
@@ -12,6 +11,8 @@ let popular_films = document.querySelector(".popular_films")
 let expected_novelties = document.querySelector(".expected_novelties")
 let box_office = document.querySelector(".box_office")
 let all_new = document.querySelector(".all_new")
+let first_places = document.querySelector(".first_places")
+let other_persons = document.querySelector(".other_persons")
 
 getDetails("/movie/now_playing")
     .then(res => {
@@ -68,16 +69,75 @@ getDetails("/movie/upcoming")
 
 getDetails(`/movie/popular`)
     .then(res => {
-
-        reloadCards(res.data.results.slice(9, 13), popular_films)
+        reloadCards(res.data.results.slice(0, 4), popular_films)
         reloadCards(res.data.results.slice(15, 20), box_office)
         reloadTrailers(res.data.results, some_trailers)
+
+        let isMouseDown = false;
+        let startX;
+        let scrollLeft;
+
+        some_trailers.addEventListener('mousedown', (e) => {
+            isMouseDown = true;
+            startX = e.pageX - some_trailers.offsetLeft;
+            scrollLeft = some_trailers.scrollLeft;
+        });
+
+        some_trailers.addEventListener('mouseleave', () => {
+            isMouseDown = false;
+        });
+
+        some_trailers.addEventListener('mouseup', () => {
+            isMouseDown = false;
+        });
+
+        some_trailers.addEventListener('mousemove', (e) => {
+            if (!isMouseDown) return;
+            e.preventDefault();
+            const x = e.pageX - some_trailers.offsetLeft;
+            const walk = (x - startX);
+            some_trailers.scrollLeft = scrollLeft - walk;
+        });
     })
+
+getDetails("/person/popular")
+    .then(res => {
+        reloadPersons(res.data.results.slice(0, 2), first_places)
+        reloadOthers(res.data.results.slice(2), other_persons)
+
+        let isMouseDown = false;
+        let startY;
+        let scrollTop;
+
+        other_persons.addEventListener('mousedown', (e) => {
+            isMouseDown = true;
+            startY = e.pageY - other_persons.offsetTop;
+            scrollTop = other_persons.scrollTop;
+        });
+
+        other_persons.addEventListener('mouseleave', () => {
+            isMouseDown = false;
+        });
+
+        other_persons.addEventListener('mouseup', () => {
+            isMouseDown = false;
+        });
+
+        other_persons.addEventListener('mousemove', (e) => {
+            if (!isMouseDown) return;
+            e.preventDefault();
+            const y = e.pageY - other_persons.offsetTop;
+            const walk = (y - startY) * 2;
+            other_persons.scrollTop = scrollTop - walk;
+        });
+    })
+
 
 let tabs_genre = document.querySelectorAll(".tabs li")
 let tabs_time = document.querySelectorAll(".tabs_time li")
 let tabs_period = document.querySelectorAll(".tabs_period li")
 let tabs_country = document.querySelectorAll(".tabs_country li")
+
 
 tabs(tabs_genre)
 tabs(tabs_time)
@@ -88,7 +148,15 @@ function tabs(tab_cont) {
 
     tab_cont.forEach(tab => {
 
+        let key = tab.getAttribute("data-time")
         tab.onclick = () => {
+
+            getDetails(`${key}`)
+                .then(res => {
+                    console.log(res);
+                    reloadCards(res.data.results.slice(0, 4), popular_films)
+                })
+
             tab_cont.forEach(tab => tab.classList.remove("active_tab"))
 
             tab.classList.add("active_tab")
@@ -152,5 +220,3 @@ for (let icon of sub_social_icons) {
     li_social.append(a_social)
     sub_social.append(li_social)
 }
-
-
