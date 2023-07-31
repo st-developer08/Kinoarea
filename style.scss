@@ -101,6 +101,8 @@ h6 {
 }
 
 body {
+    position: relative;
+    height: 100%;
     background: #1E2538;
     background-image: url("/images/joker.png");
     background-position: 0 0;
@@ -536,7 +538,7 @@ body {
 }
 
 .trailers_player {
-    background: #000;
+    // background: #000;
     width: 100%;
     height: 600px;
     transition: .5s linear;
@@ -1077,4 +1079,25 @@ center {
     }
 
     white-space: nowrap;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

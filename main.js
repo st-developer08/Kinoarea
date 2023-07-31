@@ -4,6 +4,7 @@ import { reloadCards, reloadTrailers } from "./modules/reload";
 
 let body = document.body
 
+
 header()
 
 let some_trailers = document.querySelector(".some_trailers")

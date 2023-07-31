@@ -109,3 +109,55 @@ export function reloadTrailers(arr, place) {
         };
     }
 }
+
+export function reloadActors(arr, place) {
+    place.innerHTML = ""
+    for (let item of arr) {
+
+        let actor = document.createElement("div")
+        let actor_img = document.createElement("div")
+        let actor_info = document.createElement("div")
+        let actor_name = document.createElement("h3")
+        let actor_original_name = document.createElement("p")
+        let actor_role = document.createElement("p")
+
+        actor.className = "actor"
+        actor_img.className = "actor_img"
+        actor_img.style.backgroundImage = `url(${img + item.profile_path})`
+        actor_info.className = "actor_info"
+        actor_name.className = "actor_name"
+        actor_name.innerHTML = item.name
+        actor_original_name.className = "actor_original_name"
+        actor_original_name.innerHTML = item.original_name
+        actor_role.className = "actor_role"
+        actor_role.classList.add("yellow")
+        actor_role.innerHTML = item.character
+
+        actor.append(actor_img, actor_info)
+        actor_info.append(actor_name, actor_original_name, actor_role)
+        place.append(actor)
+    }
+
+}
+
+export function getRandomElements(arr, count) {
+    if (count >= arr.length) {
+      return arr.slice(); // Возвращаем копию исходного массива, если требуемое количество элементов больше или равно длине массива
+    }
+  
+    const randomIndexes = [];
+    const result = [];
+  
+    while (randomIndexes.length < count) {
+      const randomIndex = Math.floor(Math.random() * arr.length);
+      if (!randomIndexes.includes(randomIndex)) {
+        randomIndexes.push(randomIndex);
+      }
+    }
+  
+    for (const index of randomIndexes) {
+      result.push(arr[index]);
+    }
+  
+    return result;
+  }

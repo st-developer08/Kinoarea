@@ -1,7 +1,7 @@
 import { Chart, registerables } from "chart.js";
 import { header } from "../../modules/header";
 import { getDetails } from "../../modules/https.request";
-import { img } from "../../modules/reload";
+import { getRandomElements, img, reloadActors, reloadCards } from "../../modules/reload";
 
 Chart.register(...registerables)
 
@@ -51,22 +51,33 @@ let watch = document.querySelector(".links_parent a")
 let expectation_rating_count = document.querySelector(".expectation_rating span")
 let expectation_rating_line = document.querySelector(".expectation_rating .line")
 let favorited = document.querySelector(".statistic p")
+let trailers_title = document.querySelector(".trailers_title h2")
+let posters_title = document.querySelectorAll(".posters_title")
+let like = document.querySelector(".like .counter")
+let dislike = document.querySelector(".dislike .counter")
 
-// let genresDiv = document.querySelector(".genres")
-// let link = document.querySelector(".see")
-// let container = document.querySelector('.cards')
+const iframe = document.querySelector('.trailers_player')
+let actors_container = document.querySelector('.actors_container')
+let posters_container = document.querySelector('.posters_container')
+let stills_container = document.querySelector('.stills_container')
 
 const movie_id = location.search.split('=').at(-1)
 
+
 getDetails(`/movie/${movie_id}`)
     .then(res => {
-        // const { data: { genres } } = res
         path.innerHTML = res.data.title
         title.innerHTML = res.data.title
+        trailers_title.innerHTML = res.data.title
+        like.innerHTML = res.data.vote_count
+        dislike.innerHTML = Math.round(res.data.vote_count / 4)
         original_title.innerHTML = res.data.original_title
         description.innerHTML = res.data.overview
         counter_kinoarea.innerHTML = (res.data.vote_average + 2).toFixed(2) > 10 ? 10 : (res.data.vote_average + 2).toFixed(2)
         counter_imdb.innerHTML = res.data.vote_average.toFixed(2)
+        posters_title.forEach(title => {
+            title.innerHTML = res.data.title
+        })
         movie_img.src = `${img + res.data.poster_path}`
         watch.href = `${res.data.homepage}`
         expectation_rating_count.innerHTML = ` Expectation Rating ${(res.data.vote_average * 10).toFixed(0)}%`
@@ -75,7 +86,6 @@ getDetails(`/movie/${movie_id}`)
 
         body.style.backgroundImage = `url(${img + res.data.backdrop_path})`
 
-        console.log(res.data);
         let firstNum = (res.data.vote_average + 2) * 10 >= 100 ? 100 : (res.data.vote_average + 2) * 10
         new Chart(kinoarea_ctx, {
             type: 'doughnut',
@@ -130,22 +140,45 @@ getDetails(`/movie/${movie_id}`)
 
 getDetails(`/movie/${movie_id}/credits`)
     .then(res => {
-        console.log(res.data);
-        for (let item of res.data.cast.slice(0, 10)) {
-            container.innerHTML += `
-                <img src="${img + item.profile_path}" alt="" />
-            `
-        }
+        reloadActors(res.data.cast.slice(0, 10), actors_container)
     })
 
 getDetails(`/movie/${movie_id}/videos`)
     .then(res => {
-        const iframe = document.querySelector('embed')
         let videoObj = res.data.results[Math.floor(Math.random() * res.data.results.length - 1)]
-
         iframe.src = `https://www.youtube.com/embed/${videoObj.key}`
+    })
+getDetails(`/movie/${movie_id}/images`)
+    .then(res => {
+        // console.log(res.data.posters);
+        for (let item of getRandomElements(res.data.posters, 4)) {
+            posters_container.innerHTML += `
+                <img src="${img + item.file_path}" alt="" />
+            `
+        }
+        stills_container.innerHTML = ""
 
-        console.log(videoObj);
+        console.log(res.data.backdrops);
+        for (let item of getRandomElements(res.data.backdrops, 6)) {
+            let stills_item = document.createElement("div")
+            stills_item.className = "stills_item"
+            stills_item.style.backgroundImage = `url(${img + item.file_path})`
+            stills_container.append(stills_item)
+        }
     })
 
+let social_sub = document.querySelector(".social_sub")
 
+for (let icon of social_icons) {
+    let li_social = document.createElement("li")
+    let a_social = document.createElement("a")
+    let icon_social = document.createElement("img")
+
+    icon_social.src = `/icons/${icon}.svg`
+    icon_social.alt = `${icon}`
+    a_social.href = "#"
+
+    a_social.append(icon_social)
+    li_social.append(a_social)
+    social_sub.append(li_social, more)
+}
