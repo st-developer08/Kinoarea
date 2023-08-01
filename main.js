@@ -1,6 +1,7 @@
 import { header } from "./modules/header";
 import { getDetails } from "./modules/https.request";
-import { img, reloadCards, reloadOthers, reloadPersons, reloadTrailers } from "./modules/reload";
+import { img, reloadCards, reloadGenres, reloadOthers, reloadPersons, reloadTrailers } from "./modules/reload";
+import { scrollToX, scrollToY } from "./modules/scrollFunction";
 
 let body = document.body
 
@@ -72,32 +73,7 @@ getDetails(`/movie/popular`)
         reloadCards(res.data.results.slice(0, 4), popular_films)
         reloadCards(res.data.results.slice(15, 20), box_office)
         reloadTrailers(res.data.results, some_trailers)
-
-        let isMouseDown = false;
-        let startX;
-        let scrollLeft;
-
-        some_trailers.addEventListener('mousedown', (e) => {
-            isMouseDown = true;
-            startX = e.pageX - some_trailers.offsetLeft;
-            scrollLeft = some_trailers.scrollLeft;
-        });
-
-        some_trailers.addEventListener('mouseleave', () => {
-            isMouseDown = false;
-        });
-
-        some_trailers.addEventListener('mouseup', () => {
-            isMouseDown = false;
-        });
-
-        some_trailers.addEventListener('mousemove', (e) => {
-            if (!isMouseDown) return;
-            e.preventDefault();
-            const x = e.pageX - some_trailers.offsetLeft;
-            const walk = (x - startX);
-            some_trailers.scrollLeft = scrollLeft - walk;
-        });
+        scrollToX(some_trailers)
     })
 
 getDetails("/person/popular")
@@ -105,41 +81,27 @@ getDetails("/person/popular")
         reloadPersons(res.data.results.slice(0, 2), first_places)
         reloadOthers(res.data.results.slice(2), other_persons)
 
-        let isMouseDown = false;
-        let startY;
-        let scrollTop;
-
-        other_persons.addEventListener('mousedown', (e) => {
-            isMouseDown = true;
-            startY = e.pageY - other_persons.offsetTop;
-            scrollTop = other_persons.scrollTop;
-        });
-
-        other_persons.addEventListener('mouseleave', () => {
-            isMouseDown = false;
-        });
-
-        other_persons.addEventListener('mouseup', () => {
-            isMouseDown = false;
-        });
-
-        other_persons.addEventListener('mousemove', (e) => {
-            if (!isMouseDown) return;
-            e.preventDefault();
-            const y = e.pageY - other_persons.offsetTop;
-            const walk = (y - startY) * 2;
-            other_persons.scrollTop = scrollTop - walk;
-        });
+        scrollToY(other_persons)
     })
 
 
-let tabs_genre = document.querySelectorAll(".tabs li")
+let tabs_cont = document.querySelector(".tabs")
+
+getDetails("/genre/movie/list")
+    .then(res => {
+
+        reloadGenres(res.data.genres, tabs_cont)
+        scrollToX(tabs_cont)
+
+        let tabs_genre = document.querySelectorAll(".tabs li")
+
+        tabs(tabs_genre)
+    })
 let tabs_time = document.querySelectorAll(".tabs_time li")
 let tabs_period = document.querySelectorAll(".tabs_period li")
 let tabs_country = document.querySelectorAll(".tabs_country li")
 
 
-tabs(tabs_genre)
 tabs(tabs_time)
 tabs(tabs_period)
 tabs(tabs_country)

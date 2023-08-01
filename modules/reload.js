@@ -1,5 +1,6 @@
 import { getDetails } from "./https.request"
 
+
 let nums = []
 
 for (let i = 20; i < 45; i++) {
@@ -8,6 +9,7 @@ for (let i = 20; i < 45; i++) {
 
 export let img = import.meta.env.VITE_BASE_IMG
 
+let key = img
 export function reloadCards(arr, place) {
     place.innerHTML = ""
 
@@ -230,4 +232,71 @@ export function reloadOthers(arr, cont) {
         right.append(place)
         cont.append(li)
     }
+}
+
+export function reloadProduction(arr, place) {
+    place.innerHTML = ""
+
+    for (let item of arr) {
+
+        let li = document.createElement("li")
+        li.className = "yellow"
+        li.innerHTML = (arr.indexOf(item) + 1) + "." + " " + item.name
+        place.append(li)
+    }
+
+}
+
+export function reloadEmployee(arr, place) {
+    place.innerHTML = ""
+
+    for (let item of arr) {
+        let director = document.createElement("div")
+        let director_img = document.createElement("div")
+        let img = document.createElement("img")
+        let director_info = document.createElement("div")
+        let director_name = document.createElement("h3")
+        let director_original_name = document.createElement("p")
+        let director_career = document.createElement("p")
+
+        director.className = "director"
+        director_img.className = "director_img"
+        director_info.className = "director_info"
+        director_name.className = "director_name"
+        director_original_name.className = "director_original_name"
+        director_career.className = "director_career"
+        director_career.classList.add("yellow")
+
+        img.src = `${key}${item.profile_path}` === "null" ? "/images/director.png" : `${key}${item.profile_path}`;
+
+        director_name.innerHTML = item.name
+        director_original_name.innerHTML = item.original_name
+        director_career.innerHTML = item.job
+
+        director.append(director_img, director_info)
+        director_img.append(img)
+        director_info.append(director_name, director_original_name, director_career)
+        place.append(director)
+    }
+
+}
+export function reloadGenres(arr, place) {
+
+    place.innerHTML = ""
+
+    let all = document.createElement("li")
+    all.className = "active_tab"
+    all.innerHTML = "All"
+
+
+    for (let item of arr) {
+
+        let li = document.createElement("li")
+
+        li.innerHTML = item.name
+
+        place.prepend(all)
+        place.append(li)
+    }
+
 }

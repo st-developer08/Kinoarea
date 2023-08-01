@@ -296,29 +296,22 @@ button {
 
 .bottom_info {
     @include flex();
-    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
     font-size: 12px;
-    gap: 50px;
+    gap: 10px;
     margin-bottom: 40px;
+    align-items: start;
+    max-height: 200px;
 
-
-    ul {
+    li {
         @include flex();
-        justify-content: space-between;
-        flex-direction: column;
-        gap: 10px;
-        align-items: start;
-        width: 50%;
+        justify-content: start;
+        gap: 30px;
+        width: 450px;
 
-        li {
-            @include flex();
-            justify-content: start;
-            gap: 30px;
+        span {
             width: 100%;
-
-            span {
-                width: 100%;
-            }
         }
     }
 }
@@ -346,17 +339,17 @@ button {
 
     .top {
         @include flex();
-        gap: 30px;
+        gap: 20px;
         width: 100%;
         justify-content: space-between;
 
         .directors {
             @include flex();
-            gap: 45px;
+            gap: 25px;
 
             .director {
                 @include flex();
-                gap: 15px;
+                gap: 10px;
 
                 .director_info {
                     @include flex();
@@ -386,8 +379,11 @@ button {
 
         .companies {
             @include flex();
-            gap: 100px;
+            gap: 20px;
+            align-items: start;
         }
+
+        white-space: nowrap;
 
         .production_companies,
         .special_effects,
@@ -396,9 +392,11 @@ button {
             flex-direction: column;
             gap: 10px;
             align-items: start;
-
+            white-space: nowrap;
+            
             li {
-                font-size: 12px;
+                white-space: nowrap;
+                font-size: 10px;
             }
         }
 

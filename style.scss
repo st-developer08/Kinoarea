@@ -297,9 +297,18 @@ body {
     .tabs_country,
     .tabs {
         @include flex();
+        justify-content: start;
         gap: 15px;
+        max-width: 500px;
+        overflow: auto;
+        transition: .3s ease;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
         li {
+            white-space: nowrap;
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
@@ -547,7 +556,7 @@ body {
 }
 
 .subline {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
     .trailers_title {
         @include flex();
@@ -621,8 +630,10 @@ body {
     display: flex;
     overflow: auto;
     gap: 20px;
-    padding-bottom: 20px;
+    border-radius: 10px;
+    padding: 20px 20px;
     margin-bottom: 40px;
+    transition: .3s ease;
 
     &::-webkit-scrollbar {
         height: 7px;
@@ -743,7 +754,7 @@ body {
     @include flex();
     margin-bottom: 40px;
     gap: 32px;
-    
+
     .first_places {
         @include flex();
         gap: 32px;

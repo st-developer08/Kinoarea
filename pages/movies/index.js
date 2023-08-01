@@ -1,14 +1,13 @@
 import { Chart, registerables } from "chart.js";
 import { header } from "../../modules/header";
 import { getDetails } from "../../modules/https.request";
-import { getRandomElements, img, reloadActors, reloadCards } from "../../modules/reload";
+import { getRandomElements, img, reloadActors, reloadCards, reloadEmployee, reloadProduction } from "../../modules/reload";
 
 Chart.register(...registerables)
 
 header()
 
 let body = document.body
-
 let social_icons = [
     "vk",
     "instagram",
@@ -56,17 +55,40 @@ let posters_title = document.querySelectorAll(".posters_title")
 let like = document.querySelector(".like .counter")
 let dislike = document.querySelector(".dislike .counter")
 
+let bottom_info = document.querySelector('.bottom_info')
 const iframe = document.querySelector('.trailers_player')
 let actors_container = document.querySelector('.actors_container')
 let posters_container = document.querySelector('.posters_container')
 let stills_container = document.querySelector('.stills_container')
 let similar_films = document.querySelector('.similar_films')
+let directors = document.querySelector('.directors')
+let production_companies_list = document.querySelector('.production_companies ul')
+let special_effects = document.querySelector('.special_effects ul')
 
 const movie_id = location.search.split('=').at(-1)
 
+function trimObjectTo20Keys(obj) {
+    const trimmedObject = {};
+    let count = 0;
+
+    for (const key in obj) {
+        if (count === 18) break;
+        trimmedObject[key] = obj[key];
+        count++;
+    }
+
+    return trimmedObject;
+}
 
 getDetails(`/movie/${movie_id}`)
     .then(res => {
+        const trimmedObject = trimObjectTo20Keys(res.data);
+        bottom_info.innerHTML = ""
+        for (let item in trimmedObject) {
+            bottom_info.innerHTML += `
+            <li> <span class="regular">${item}:</span> <span class="yellow">${typeof res.data[item]}</span></li>
+            `
+        }
         path.innerHTML = res.data.title
         title.innerHTML = res.data.title
         trailers_title.innerHTML = res.data.title
@@ -84,6 +106,11 @@ getDetails(`/movie/${movie_id}`)
         expectation_rating_count.innerHTML = ` Expectation Rating ${(res.data.vote_average * 10).toFixed(0)}%`
         expectation_rating_line.style.width = `${res.data.vote_average * 10}%`
         favorited.innerHTML = ` Favorited by ${Math.round(res.data.popularity)} people`
+
+        let { data: { production_companies, production_countries } } = res
+        console.log(res);
+        reloadProduction(production_companies, production_companies_list)
+        reloadProduction(production_countries, special_effects)
 
         body.style.backgroundImage = `url(${img + res.data.backdrop_path})`
 
@@ -140,10 +167,11 @@ getDetails(`/movie/${movie_id}`)
                     if (item.genre_ids.some(genreId => genreIdsSet.has(genreId))) {
                         similar_arr.push(item);
                     }
+                    reloadCards(getRandomElements(similar_arr, 4), similar_films);
                 });
 
-                reloadCards(getRandomElements(similar_arr, 4), similar_films);
-                console.log(similar_arr);
+                similar_arr.length = 0;
+
             });
 
     })
@@ -151,16 +179,18 @@ getDetails(`/movie/${movie_id}`)
 getDetails(`/movie/${movie_id}/credits`)
     .then(res => {
         reloadActors(res.data.cast.slice(0, 10), actors_container)
+        reloadEmployee(getRandomElements(res.data.crew, 2), directors)
     })
 
 getDetails(`/movie/${movie_id}/videos`)
     .then(res => {
-        let videoObj = res.data.results[Math.floor(Math.random() * (res.data.results.length - 1))]
-        iframe.src = `https://www.youtube.com/embed/${videoObj.key}`
+        let videoObj = getRandomElements(res.data.results, 1)
+
+        iframe.src = `https://www.youtube.com/embed/${videoObj[0].key}`
     })
 getDetails(`/movie/${movie_id}/images`)
     .then(res => {
-        // console.log(res.data.posters);
+        // console.log(res.data);
         for (let item of getRandomElements(res.data.posters, 4)) {
             posters_container.innerHTML += `
                 <img src="${img + item.file_path}" alt="" />
