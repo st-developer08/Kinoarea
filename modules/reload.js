@@ -267,8 +267,7 @@ export function reloadEmployee(arr, place) {
         director_career.className = "director_career"
         director_career.classList.add("yellow")
 
-        img.src = `${key}${item.profile_path}` === "null" ? "/images/director.png" : `${key}${item.profile_path}`;
-
+        img.src = `${key + item.profile_path}` === "https://image.tmdb.org/t/p/originalnull" ? `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHhZY638DYGWcclgVIYXT-Vre_jGoxzoeoaQ&usqp=CAU` : `${key}${item.profile_path}`;
         director_name.innerHTML = item.name
         director_original_name.innerHTML = item.original_name
         director_career.innerHTML = item.job

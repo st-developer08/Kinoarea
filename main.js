@@ -23,27 +23,35 @@ getDetails("/movie/now_playing")
 
         bodyBack(cards_images)
 
-        all_new.onclick = () => {
 
+        all_new.onclick = () => {
+            console.log(cards.getBoundingClientRect());
             if (all_new.innerHTML === "All new") {
                 reloadCards(res.data.results, cards)
                 all_new.innerHTML = "Hide"
 
                 let cards_images = document.querySelectorAll(".card_img")
                 bodyBack(cards_images)
-
-            } else {
                 window.scrollTo({
-                    top: 70,
+                    top: 1830,
                     behavior: 'smooth'
                 });
 
-                reloadCards(res.data.results.slice(0, 8), cards)
-                all_new.innerHTML = "All new"
+            } else {
+                window.scrollTo({
+                    top: 510,
+                    behavior: 'smooth'
+                });
 
-                let cards_images = document.querySelectorAll(".card_img")
-                bodyBack(cards_images)
+                setTimeout(() => {
+                    reloadCards(res.data.results.slice(0, 8), cards)
+                    all_new.innerHTML = "All new"
+
+                    let cards_images = document.querySelectorAll(".card_img")
+                    bodyBack(cards_images)
+                }, 500);
             }
+
         }
     })
 

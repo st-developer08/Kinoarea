@@ -27,7 +27,7 @@ export function scrollToX(cont) {
         e.preventDefault();
         const x = e.pageX - cont.offsetLeft;
         const walk = (x - startX);
-        cont.scrollLeft = scrollLeft - walk*3;
+        cont.scrollLeft = scrollLeft - walk * 3;
         cont.style.background = "#0000007f"
     });
 }
