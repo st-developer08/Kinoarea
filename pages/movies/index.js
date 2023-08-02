@@ -3,7 +3,7 @@ import { header } from "../../modules/header";
 import { getDetails } from "../../modules/https.request";
 import { getRandomElements, img, reloadActors, reloadCards, reloadEmployee, reloadProduction } from "../../modules/reload";
 
-// Chart.register(...registerables)
+Chart.register(...registerables)
 
 header()
 
