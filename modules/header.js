@@ -1,3 +1,7 @@
+import {
+    getDetails
+} from "./https.request"
+
 export function header() {
     let body = document.body
     let header = document.createElement("header")
@@ -101,4 +105,24 @@ export function header() {
     logo.onclick = () => {
         location.assign("/")
     }
+    // /3/search/movie
+    function debounce(func, timeout = 300) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                func.apply(this, args);
+            }, timeout);
+        };
+    }
+
+    function getData() {
+        let val = search.value.toLowerCase().trim()
+
+        if (!val) return
+
+        getDetails(`/search/movie?query=${val}`)
+            .then(res => console.log(res))
+    }
+    search.onkeyup = debounce(() => getData())
 }
