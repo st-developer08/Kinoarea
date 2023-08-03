@@ -302,6 +302,7 @@ body {
         max-width: 500px;
         overflow: auto;
         transition: .3s ease;
+        border-radius: 5px;
 
         &::-webkit-scrollbar {
             display: none;
@@ -925,7 +926,7 @@ footer {
     overflow: hidden;
     margin-top: 80px;
     background-image: linear-gradient(to top, #1d39a0cf, #1d39a0cf),
-        url("/public/images/follow_img.png");
+        url("/images/follow_img.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

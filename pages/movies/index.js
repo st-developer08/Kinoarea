@@ -6,7 +6,6 @@ import { getRandomElements, img, reloadActors, reloadCards, reloadEmployee, relo
 Chart.register(...registerables)
 
 header()
-
 let body = document.body
 let social_icons = [
     "vk",
@@ -14,7 +13,6 @@ let social_icons = [
     "facebook",
     "twitter"
 ]
-
 let social = document.querySelector(".movie_text .social")
 
 let more = document.createElement("li")
@@ -64,6 +62,7 @@ let similar_films = document.querySelector('.similar_films')
 let directors = document.querySelector('.directors')
 let production_companies_list = document.querySelector('.production_companies ul')
 let special_effects = document.querySelector('.special_effects ul')
+let dubbing_studio = document.querySelector(".dubbing_studio span")
 let adult_value = document.querySelector(".adult_value")
 let collection_value = document.querySelector(".collection_value")
 let tagline_value = document.querySelector(".tagline_value")
@@ -87,7 +86,7 @@ const movie_id = location.search.split('=').at(-1)
 
 getDetails(`/movie/${movie_id}`)
     .then(res => {
-        let { data: { genres } } = res
+        let { data: { production_companies, production_countries, genres, belongs_to_collection } } = res
 
         adult_value.innerHTML = res.data.adult === false ? "No" : "Yes"
         collection_value.innerHTML = res.data.belongs_to_collection?.name || "No"
@@ -96,6 +95,7 @@ getDetails(`/movie/${movie_id}`)
         genres_value.innerHTML = genres[0].name
         original_language_value.innerHTML = res.data.original_language.toUpperCase()
         default_title_value.innerHTML = res.data.title
+        document.title = res.data.title
         original_title_value.innerHTML = res.data.original_title
         vote_average_value.innerHTML = res.data.vote_average.toFixed(2)
         vote_count_value.innerHTML = res.data.vote_count
@@ -112,7 +112,6 @@ getDetails(`/movie/${movie_id}`)
             value.innerHTML = value.innerHTML.slice(0, 35)
         })
         homepage.innerHTML = `<a class="yellow" target="_blank" href="${res.data.homepage}">${res.data.homepage.slice(0, 30)}...</a>`
-
         path.innerHTML = res.data.title
         title.innerHTML = res.data.title
         trailers_title.innerHTML = res.data.title
@@ -120,8 +119,10 @@ getDetails(`/movie/${movie_id}`)
         dislike.innerHTML = Math.round(res.data.vote_count / 4)
         original_title.innerHTML = res.data.original_title
         description.innerHTML = res.data.overview
-        counter_kinoarea.innerHTML = (res.data.vote_average + 2).toFixed(2) > 10 ? 10 : (res.data.vote_average + 2).toFixed(2)
+        counter_kinoarea.innerHTML = (res.data.vote_average + 2).toFixed(2) > 10 ? '10.00' : (res.data.vote_average + 2).toFixed(2)
         counter_imdb.innerHTML = res.data.vote_average.toFixed(2)
+        dubbing_studio.innerHTML = "1. " + belongs_to_collection?.name
+
         posters_title.forEach(title => {
             title.innerHTML = res.data.title
         })
@@ -141,21 +142,21 @@ getDetails(`/movie/${movie_id}`)
         expectation_rating_line.style.width = `${res.data.vote_average * 10}%`
         favorited.innerHTML = ` Favorited by ${Math.round(res.data.popularity)} people`
 
-        let { data: { production_companies, production_countries } } = res
         reloadProduction(production_companies, production_companies_list)
         reloadProduction(production_countries, special_effects)
-        counter_kinoarea_cont.style.background = getColorByNumber(res.data.vote_average + 2) + "50"
+        counter_kinoarea_cont.style.background = getColorByNumber(res.data.vote_average + 2 > 10 ? 10 : res.data.vote_average + 2) + "50"
         counter_imdb_cont.style.background = getColorByNumber(res.data.vote_average) + "50"
-        body.style.backgroundImage = `url(${img + res.data.backdrop_path})`
+        body.style.backgroundImage = `url(${img + res.data.backdrop_path})` === "url(https://image.tmdb.org/t/p/originalnull)" ? `url(/images/joker.png)` : `url(${img + res.data.backdrop_path})`
 
         let firstNum = (res.data.vote_average + 2) * 10 >= 100 ? 100 : (res.data.vote_average + 2) * 10
+
         new Chart(kinoarea_ctx, {
             type: 'doughnut',
             data: {
                 labels: ['Kinoarea', 'Kinoarea',],
                 datasets: [{
                     data: [firstNum, 100 - firstNum],
-                    backgroundColor: [getColorByNumber(res.data.vote_average + 2),
+                    backgroundColor: [getColorByNumber(res.data.vote_average + 2 > 10 ? 10 : res.data.vote_average + 2),
                         'transparent'],
                     cutout: '70%',
                     borderWidth: 0

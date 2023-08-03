@@ -445,24 +445,49 @@ button {
         height: 190px;
         min-width: 100px;
         min-height: 120px;
-        background-image: url("/public/images/director.png");
+        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHhZY638DYGWcclgVIYXT-Vre_jGoxzoeoaQ&usqp=CAU");
         background-position: 50% 10%;
         background-size: cover;
         background-repeat: no-repeat;
     }
 
     .actor_info {
+        position: relative;
         gap: 5px;
 
         .actor_original_name {
             opacity: .5;
         }
 
+        .yellow {
+            &:hover {
+                opacity: 1;
+            }
+        }
 
         .actor_original_name,
         .actor_role {
             font-size: 12px;
             text-decoration: none;
+            white-space: nowrap;
+            width: 170px;
+            overflow: auto;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0px;
+            width: 10px;
+            height: 35px;
+            background: linear-gradient(95deg, transparent, #1E2538);
         }
     }
 

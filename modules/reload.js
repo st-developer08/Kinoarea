@@ -63,7 +63,7 @@ export function reloadCards(arr, place) {
         place.append(card)
 
         span.onclick = () => {
-            location.assign('/pages/movies/?id=' + item.id)
+            window.open('/pages/movies/?id=' + item.id, "_blank")
         }
 
     }
@@ -130,7 +130,8 @@ export function reloadActors(arr, place) {
 
         actor.className = "actor"
         actor_img.className = "actor_img"
-        actor_img.style.backgroundImage = `url(${img + item.profile_path})`
+        console.log(`url(${img + item.profile_path})`);
+        actor_img.style.backgroundImage = `url(${img + item.profile_path})` === `url(https://image.tmdb.org/t/p/originalnull)` ? `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHhZY638DYGWcclgVIYXT-Vre_jGoxzoeoaQ&usqp=CAU` : `url(${img + item.profile_path})`
         actor_info.className = "actor_info"
         actor_name.className = "actor_name"
         actor_name.innerHTML = item.name
@@ -143,6 +144,10 @@ export function reloadActors(arr, place) {
         actor.append(actor_img, actor_info)
         actor_info.append(actor_name, actor_original_name, actor_role)
         place.append(actor)
+
+        actor_img.onclick = () => {
+            window.open('/pages/persons/?id=' + item.id, "_blank")
+        }
     }
 
 }
