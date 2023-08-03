@@ -6,7 +6,7 @@ import { scrollToTop } from "../../modules/scrollToTop";
 
 Chart.register(...registerables)
 header()
-scrollToTop(body)
+
 let body = document.body
 let social_icons = [
     "vk",
@@ -14,6 +14,7 @@ let social_icons = [
     "facebook",
     "twitter"
 ]
+scrollToTop(body)
 let social = document.querySelector(".movie_text .social")
 
 let more = document.createElement("li")
