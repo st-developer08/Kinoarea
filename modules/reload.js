@@ -10,7 +10,7 @@ for (let i = 20; i < 45; i++) {
 export let img = import.meta.env.VITE_BASE_IMG
 
 let key = img
-export function reloadCards(arr, place) {
+export function reloadCards(arr, place, isSwiper) {
     place.innerHTML = ""
 
     for (let item of arr) {

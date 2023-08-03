@@ -2,10 +2,11 @@ import { Chart, registerables } from "chart.js";
 import { header } from "../../modules/header";
 import { getDetails } from "../../modules/https.request";
 import { getRandomElements, img, reloadActors, reloadCards, reloadEmployee, reloadProduction } from "../../modules/reload";
+import { scrollToTop } from "../../modules/scrollToTop";
 
 Chart.register(...registerables)
-
 header()
+scrollToTop(body)
 let body = document.body
 let social_icons = [
     "vk",

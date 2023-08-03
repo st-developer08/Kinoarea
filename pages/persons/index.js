@@ -2,9 +2,11 @@ import { formatDateToCustomFormat } from "../../modules/customFormatDate";
 import { header } from "../../modules/header";
 import { getDetails } from "../../modules/https.request";
 import { img } from "../../modules/reload";
+import { scrollToTop } from "../../modules/scrollToTop";
 
 header()
-
+let body = document.body
+scrollToTop(body)
 let person_id = location.search.split("=").at(-1)
 
 let actor_img = document.querySelector(".movie_img img")

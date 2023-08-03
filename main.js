@@ -2,9 +2,10 @@ import { header } from "./modules/header";
 import { getDetails } from "./modules/https.request";
 import { img, reloadCards, reloadGenres, reloadOthers, reloadPersons, reloadTrailers } from "./modules/reload";
 import { scrollToX, scrollToY } from "./modules/scrollFunction";
+import { scrollToTop } from "./modules/scrollToTop";
 
 let body = document.body
-
+scrollToTop(body)
 header()
 
 let some_trailers = document.querySelector(".some_trailers")
@@ -78,7 +79,7 @@ getDetails("/movie/upcoming")
 
 getDetails(`/movie/popular`)
     .then(res => {
-        reloadCards(res.data.results.slice(0, 4), popular_films)
+        reloadCards(res.data.results.slice(0, 4), popular_films, true) 
         reloadCards(res.data.results.slice(15, 20), box_office)
         reloadTrailers(res.data.results, some_trailers)
         scrollToX(some_trailers)
