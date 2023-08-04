@@ -1,3 +1,5 @@
+import axios from "axios"
+import { tabs } from "../main"
 import { getDetails } from "./https.request"
 
 
@@ -108,7 +110,6 @@ export function reloadTrailers(arr, place) {
             getDetails(`/movie/${item.id}/videos`)
                 .then(res => {
                     let videoObj = res.data.results[Math.floor(Math.random() * res.data.results.length - 1)]
-                    console.log(videoObj);
 
                     trailers_player.src = `https://www.youtube.com/embed/${videoObj.key}`
 
@@ -130,7 +131,6 @@ export function reloadActors(arr, place) {
 
         actor.className = "actor"
         actor_img.className = "actor_img"
-        console.log(`url(${img + item.profile_path})`);
         actor_img.style.backgroundImage = `url(${img + item.profile_path})` === `url(https://image.tmdb.org/t/p/originalnull)` ? `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHhZY638DYGWcclgVIYXT-Vre_jGoxzoeoaQ&usqp=CAU` : `url(${img + item.profile_path})`
         actor_info.className = "actor_info"
         actor_name.className = "actor_name"
@@ -291,14 +291,15 @@ export function reloadGenres(arr, place) {
     let all = document.createElement("li")
     all.className = "active_tab"
     all.innerHTML = "All"
+    all.id = "all"
 
 
     for (let item of arr) {
 
         let li = document.createElement("li")
 
+        li.id = item.id
         li.innerHTML = item.name
-
         place.prepend(all)
         place.append(li)
     }

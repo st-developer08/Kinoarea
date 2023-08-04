@@ -30,7 +30,7 @@ getDetails(`/person/${person_id}`)
             actor_bio: document.querySelector(".actor_bio"),
             actor_info: document.querySelector(".actor_info")
         }
-
+        console.log(res.data);
         actor_tabs.forEach(tab => {
             let key = tab.getAttribute("data-tab");
             tab.onclick = () => {
@@ -59,7 +59,6 @@ getDetails(`/person/${person_id}`)
         place_of_birth.innerHTML = res.data.place_of_birth + "."
         cont.innerHTML = ``
         actor_bio_text.innerHTML = res.data.biography
-        console.log(res.data);
 
         const maxIterations = Math.min(also_known_as.length, 4);
 

@@ -121,6 +121,9 @@ export function header() {
 
         if (!val) return
 
+        getDetails(`/search/person?query=${val}`)
+            .then(res => console.log(res))
+
         getDetails(`/search/movie?query=${val}`)
             .then(res => console.log(res))
     }

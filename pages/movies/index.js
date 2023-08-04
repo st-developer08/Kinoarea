@@ -4,7 +4,7 @@ import { getDetails } from "../../modules/https.request";
 import { getRandomElements, img, reloadActors, reloadCards, reloadEmployee, reloadProduction } from "../../modules/reload";
 import { scrollToTop } from "../../modules/scrollToTop";
 
-Chart.register(...registerables)
+// Chart.register(...registerables)
 header()
 
 let body = document.body
@@ -121,9 +121,9 @@ getDetails(`/movie/${movie_id}`)
         dislike.innerHTML = Math.round(res.data.vote_count / 4)
         original_title.innerHTML = res.data.original_title
         description.innerHTML = res.data.overview
-        counter_kinoarea.innerHTML = (res.data.vote_average + 2).toFixed(2) > 10 ? '10.00' : (res.data.vote_average + 2).toFixed(2)
+        counter_kinoarea.innerHTML = (res.data.vote_average + 1.32).toFixed(2) > 10 ? '10.00' : (res.data.vote_average + 1.32).toFixed(2)
         counter_imdb.innerHTML = res.data.vote_average.toFixed(2)
-        dubbing_studio.innerHTML = "1. " + belongs_to_collection?.name
+        dubbing_studio.innerHTML = "1. " + (res.data.belongs_to_collection?.name || "No")
 
         posters_title.forEach(title => {
             title.innerHTML = res.data.title
@@ -146,11 +146,11 @@ getDetails(`/movie/${movie_id}`)
 
         reloadProduction(production_companies, production_companies_list)
         reloadProduction(production_countries, special_effects)
-        counter_kinoarea_cont.style.background = getColorByNumber(res.data.vote_average + 2 > 10 ? 10 : res.data.vote_average + 2) + "50"
+        counter_kinoarea_cont.style.background = getColorByNumber(res.data.vote_average + 1.32 > 10 ? 10 : res.data.vote_average + 1.32) + "50"
         counter_imdb_cont.style.background = getColorByNumber(res.data.vote_average) + "50"
         body.style.backgroundImage = `url(${img + res.data.backdrop_path})` === "url(https://image.tmdb.org/t/p/originalnull)" ? `url(/images/joker.png)` : `url(${img + res.data.backdrop_path})`
 
-        let firstNum = (res.data.vote_average + 2) * 10 >= 100 ? 100 : (res.data.vote_average + 2) * 10
+        let firstNum = (res.data.vote_average + 1.32) * 10 >= 100 ? 100 : (res.data.vote_average + 1.32) * 10
 
         new Chart(kinoarea_ctx, {
             type: 'doughnut',
@@ -158,7 +158,7 @@ getDetails(`/movie/${movie_id}`)
                 labels: ['Kinoarea', 'Kinoarea',],
                 datasets: [{
                     data: [firstNum, 100 - firstNum],
-                    backgroundColor: [getColorByNumber(res.data.vote_average + 2 > 10 ? 10 : res.data.vote_average + 2),
+                    backgroundColor: [getColorByNumber(res.data.vote_average + 1.32 > 10 ? 10 : res.data.vote_average + 1.32),
                         'transparent'],
                     cutout: '70%',
                     borderWidth: 0

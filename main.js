@@ -18,7 +18,9 @@ let other_persons = document.querySelector(".other_persons")
 
 getDetails("/movie/now_playing")
     .then(res => {
+
         reloadCards(res.data.results.slice(0, 8), cards)
+        reloadTrailers(res.data.results, some_trailers)
 
         let cards_images = document.querySelectorAll(".card_img")
 
@@ -26,7 +28,6 @@ getDetails("/movie/now_playing")
 
 
         all_new.onclick = () => {
-            console.log(cards.getBoundingClientRect());
             if (all_new.innerHTML === "All new") {
                 reloadCards(res.data.results, cards)
                 all_new.innerHTML = "Hide"
@@ -79,9 +80,8 @@ getDetails("/movie/upcoming")
 
 getDetails(`/movie/popular`)
     .then(res => {
-        reloadCards(res.data.results.slice(0, 4), popular_films, true) 
+        reloadCards(res.data.results.slice(0, 4), popular_films, true)
         reloadCards(res.data.results.slice(15, 20), box_office)
-        reloadTrailers(res.data.results, some_trailers)
         scrollToX(some_trailers)
     })
 
@@ -100,12 +100,47 @@ getDetails("/genre/movie/list")
     .then(res => {
 
         reloadGenres(res.data.genres, tabs_cont)
+
         scrollToX(tabs_cont)
 
         let tabs_genre = document.querySelectorAll(".tabs li")
 
-        tabs(tabs_genre)
+        tabs_genre.forEach(tab => {
+
+            tab.onclick = () => {
+
+                if (tab.id === "all") {
+                    getDetails("/movie/now_playing")
+                        .then(res => reloadCards(res.data.results.slice(0, 8), cards))
+
+                } else {
+
+                    getDetails("/movie/now_playing")
+                        .then(res => {
+                            let similar_arr = []
+                            let { data: { results } } = res
+
+                            results.forEach(item => {
+                                if (item.genre_ids.some(genreId => genreId == tab.id)) {
+                                    similar_arr.push(item);
+                                }
+                                reloadCards(similar_arr.slice(0, 8), cards);
+                            });
+
+                            similar_arr.length = 0;
+
+                        });
+
+                }
+                tabs_genre.forEach(tab => tab.classList.remove("active_tab"))
+                tab.classList.add("active_tab")
+            }
+
+        })
+
+
     })
+
 let tabs_time = document.querySelectorAll(".tabs_time li")
 let tabs_period = document.querySelectorAll(".tabs_period li")
 let tabs_country = document.querySelectorAll(".tabs_country li")
@@ -115,18 +150,11 @@ tabs(tabs_time)
 tabs(tabs_period)
 tabs(tabs_country)
 
-function tabs(tab_cont) {
+export function tabs(tab_cont) {
 
     tab_cont.forEach(tab => {
 
-        let key = tab.getAttribute("data-time")
         tab.onclick = () => {
-
-            getDetails(`${key}`)
-                .then(res => {
-                    console.log(res);
-                    reloadCards(res.data.results.slice(0, 4), popular_films)
-                })
 
             tab_cont.forEach(tab => tab.classList.remove("active_tab"))
 
