@@ -143,10 +143,11 @@ export function header() {
     }
 
     search.onclick = () => {
-        modal_search.style.top = "20px"
-        modal_search.style.opacity = "1"
+        modal_search.style.display = "flex"
         search_canvas.style.display = "block"
         setTimeout(() => {
+            modal_search.style.top = "20px"
+            modal_search.style.opacity = "1"
             search_canvas.style.opacity = "1"
         }, 0);
         body.style.overflowY = "hidden"
@@ -162,6 +163,7 @@ export function header() {
             search_canvas.style.opacity = "0"
 
             setTimeout(() => {
+                modal_search.style.display = "none"
                 search_canvas.style.display = "none"
             }, 500);
         }
