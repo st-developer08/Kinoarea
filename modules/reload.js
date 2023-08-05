@@ -305,3 +305,63 @@ export function reloadGenres(arr, place) {
     }
 
 }
+export function reloadSearch(arr, place, filter) {
+
+    place.innerHTML = ""
+
+    for (let item of arr) {
+
+        let result = document.createElement("div")
+        let left = document.createElement("div")
+        let result_img = document.createElement("img")
+        let result_info = document.createElement("div")
+        let result_title = document.createElement("h3")
+        let result_original_title = document.createElement("span")
+        let result_role = document.createElement("div")
+
+        let right = document.createElement("div")
+        let span = document.createElement("span")
+
+        result.classList.add("result")
+        left.classList.add("left")
+        result_info.classList.add("result_info")
+        result_title.classList.add("result_title")
+        result_original_title.classList.add("result_original_title")
+        result_role.classList.add("result_role")
+        right.classList.add("right")
+
+        result_img.src = `${img + item.poster_path}`
+        result_title.innerHTML = item.title
+        result_original_title.innerHTML = item.original_title
+        if (filter === "movie") {
+            let { genre_ids } = item
+            span.innerHTML = item.vote_average.toFixed(2)
+            span.style.display = "block"
+
+            for (let item of genre_ids) {
+                let yellow = document.createElement("span")
+                yellow.classList.add("yellow")
+                yellow.innerHTML = item
+                result_role.append(yellow)
+            }
+
+        } else {
+            result_title.innerHTML = item.name
+            result_original_title.innerHTML = item.name
+            result_img.src = `${img + item.profile_path}` === `https://image.tmdb.org/t/p/originalnull` ? `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHhZY638DYGWcclgVIYXT-Vre_jGoxzoeoaQ&usqp=CAU` : `${img + item.profile_path}`
+            span.style.display = "none"
+            span.innerHTML = ""
+            result_role.innerHTML = item.known_for_department
+            result_role.classList.add("yellow")
+        }
+        result.append(left, right)
+        left.append(result_img, result_info)
+        result_info.append(result_title, result_original_title, result_role)
+        right.append(span)
+        place.append(result)
+        result.onclick = () => {
+            window.open(`/pages/${filter}s/?id=` + item.id, "_blank")
+        }
+    }
+    console.log(arr);
+}

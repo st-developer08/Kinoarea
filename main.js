@@ -8,6 +8,7 @@ let body = document.body
 scrollToTop(body)
 header()
 
+let search_result = document.querySelector(".search_result")
 let some_trailers = document.querySelector(".some_trailers")
 let popular_films = document.querySelector(".popular_films")
 let expected_novelties = document.querySelector(".expected_novelties")
@@ -15,6 +16,10 @@ let box_office = document.querySelector(".box_office")
 let all_new = document.querySelector(".all_new")
 let first_places = document.querySelector(".first_places")
 let other_persons = document.querySelector(".other_persons")
+    
+scrollToY(search_result)
+
+
 
 getDetails("/movie/now_playing")
     .then(res => {
@@ -112,7 +117,8 @@ getDetails("/genre/movie/list")
                 if (tab.id === "all") {
                     getDetails("/movie/now_playing")
                         .then(res => reloadCards(res.data.results.slice(0, 8), cards))
-
+                    cards.style.display = "grid"
+                    cards.classList.remove("cards_empty")
                 } else {
 
                     getDetails("/movie/now_playing")
@@ -124,7 +130,15 @@ getDetails("/genre/movie/list")
                                 if (item.genre_ids.some(genreId => genreId == tab.id)) {
                                     similar_arr.push(item);
                                 }
-                                reloadCards(similar_arr.slice(0, 8), cards);
+                                if (similar_arr.length !== 0) {
+                                    reloadCards(similar_arr.slice(0, 8), cards);
+                                    cards.classList.remove("cards_empty")
+                                    cards.style.display = "grid"
+                                } else {
+                                    cards.innerHTML = `<h4>There is no mowies with ${tab.innerHTML} genre.</h4>`
+                                    cards.classList.add("cards_empty")
+                                    cards.style.display = "block"
+                                }
                             });
 
                             similar_arr.length = 0;

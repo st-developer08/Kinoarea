@@ -45,9 +45,13 @@ export function scrollToY(cont) {
 
     cont.addEventListener('mouseleave', () => {
         isMouseDown = false;
+        cont.style.background = "none"
+        cont.style.opacity = "1"
     });
 
     cont.addEventListener('mouseup', () => {
+        cont.style.background = "none"
+        cont.style.opacity = "1"
         isMouseDown = false;
     });
 
@@ -57,5 +61,6 @@ export function scrollToY(cont) {
         const y = e.pageY - cont.offsetTop;
         const walk = (y - startY) * 2;
         cont.scrollTop = scrollTop - walk;
+        cont.style.background = "#0000007f"
     });
 }
