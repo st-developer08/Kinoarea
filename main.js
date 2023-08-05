@@ -1,4 +1,5 @@
 import { header } from "./modules/header";
+import { tabs } from "./modules/helpers";
 import { getDetails } from "./modules/https.request";
 import { img, reloadCards, reloadGenres, reloadOthers, reloadPersons, reloadTrailers } from "./modules/reload";
 import { scrollToX, scrollToY } from "./modules/scrollFunction";
@@ -163,20 +164,6 @@ let tabs_country = document.querySelectorAll(".tabs_country li")
 tabs(tabs_time)
 tabs(tabs_period)
 tabs(tabs_country)
-
-export function tabs(tab_cont) {
-
-    tab_cont.forEach(tab => {
-
-        tab.onclick = () => {
-
-            tab_cont.forEach(tab => tab.classList.remove("active_tab"))
-
-            tab.classList.add("active_tab")
-        }
-
-    })
-}
 
 let cards = document.querySelector(".cards")
 

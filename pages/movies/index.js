@@ -4,7 +4,7 @@ import { getDetails } from "../../modules/https.request";
 import { getRandomElements, img, reloadActors, reloadCards, reloadEmployee, reloadProduction } from "../../modules/reload";
 import { scrollToTop } from "../../modules/scrollToTop";
 
-// Chart.register(...registerables)
+Chart.register(...registerables)
 header()
 
 let body = document.body

@@ -1,5 +1,3 @@
-import axios from "axios"
-import { tabs } from "../main"
 import { getDetails } from "./https.request"
 
 
