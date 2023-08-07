@@ -100,6 +100,10 @@ h6 {
     align-items: center;
 }
 
+header {
+    margin-bottom: 40px;
+}
+
 body {
     position: relative;
     height: 100%;
@@ -201,28 +205,6 @@ body {
         }
     }
 
-    .center {
-        .links {
-            @include flex();
-            gap: 20px;
-
-            li {
-                a {
-                    padding: 10px;
-                    display: block;
-                    font-size: 12px;
-                }
-
-                border-radius: 5px;
-                transition: .3s ease;
-
-                &:hover {
-                    background: #00000058;
-                }
-
-            }
-        }
-    }
 
     .right {
         gap: 10px;
@@ -249,31 +231,48 @@ body {
             }
         }
 
-        .inp_opened {
-            width: 180px;
+    }
+
+    .sign_in {
+        border-radius: 5px;
+        background: #3657CB;
+        box-shadow: 0px 0px 15px 0px rgba(72, 113, 255, 0.80);
+        height: 30px;
+        padding: 0 20px;
+        transition: .3s linear;
+
+        &:hover {
             box-shadow: none;
-            background-position: 90% 50%;
         }
 
-        .sign_in {
-            border-radius: 5px;
-            background: #3657CB;
-            box-shadow: 0px 0px 15px 0px rgba(72, 113, 255, 0.80);
-            height: 30px;
-            padding: 0 20px;
-            transition: .3s linear;
-
-            &:hover {
-                box-shadow: none;
-            }
-
-            &:active {
-                scale: .7;
-            }
+        &:active {
+            scale: .7;
         }
     }
 
-    margin-bottom: 40px;
+}
+
+.center {
+    .links {
+        @include flex();
+        gap: 20px;
+
+        li {
+            a {
+                padding: 10px;
+                display: block;
+                font-size: 12px;
+            }
+
+            border-radius: 5px;
+            transition: .3s ease;
+
+            &:hover {
+                background: #00000058;
+            }
+
+        }
+    }
 }
 
 .headline {
@@ -372,7 +371,7 @@ body {
         @include flex();
         align-items: start;
         flex-direction: column;
-        gap: 7px;
+        // gap: 7px;
         width: 100%;
         max-width: 250.401px;
 
@@ -436,9 +435,10 @@ body {
         }
 
         .title {
+            padding: 7px 0 7px;
             font-weight: 500;
             width: 250.401px;
-            overflow: auto;
+            overflow-x: auto;
             white-space: nowrap;
 
             &::-webkit-scrollbar {
@@ -824,7 +824,7 @@ body {
     @include flex();
     flex-direction: column;
     justify-content: space-between;
-    width: 340px;
+    min-width: 340px;
     height: 340px;
     background: #1B2133;
     overflow: auto;
@@ -1345,4 +1345,8 @@ center {
     &:hover {
         opacity: .5;
     }
+}
+
+.header_two {
+    display: none;
 }

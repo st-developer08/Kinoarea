@@ -36,21 +36,23 @@ export function scrollToY(cont) {
     let isMouseDown = false;
     let startY;
     let scrollTop;
+    let bg = getComputedStyle(cont).getPropertyValue("background").split(")")[0] + ")"
 
     cont.addEventListener('mousedown', (e) => {
         isMouseDown = true;
         startY = e.pageY - cont.offsetTop;
         scrollTop = cont.scrollTop;
+        console.log(bg);
     });
 
     cont.addEventListener('mouseleave', () => {
         isMouseDown = false;
-        cont.style.background = "none"
+        cont.style.background = bg
         cont.style.opacity = "1"
     });
 
     cont.addEventListener('mouseup', () => {
-        cont.style.background = "none"
+        cont.style.background = bg
         cont.style.opacity = "1"
         isMouseDown = false;
     });

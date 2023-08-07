@@ -69,6 +69,11 @@ getDetails(`/person/${person_id}`)
 
             cont.innerHTML += `<span class="yellow also_known_as">${name}${separator} </span>`;
         }
+        if (also_known_as.length === 0) {
+
+            cont.innerHTML = `<span class="yellow also_known_as">${res.data.name} </span>`;
+
+        }
 
 
         popularity.innerHTML = res.data.popularity

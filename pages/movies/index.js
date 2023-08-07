@@ -224,7 +224,12 @@ getDetails(`/movie/${movie_id}/credits`)
 getDetails(`/movie/${movie_id}/videos`)
     .then(res => {
         let videoObj = getRandomElements(res.data.results, 1)
-        iframe.src = `https://www.youtube.com/embed/${videoObj[0].key}`
+
+        if (videoObj.length) {
+            iframe.src = `https://www.youtube.com/embed/${videoObj[0].key}`
+        } else {
+            iframe.src = "https://www.youtube.com/embed/z3GS5oYGq5U"
+        }
     })
 getDetails(`/movie/${movie_id}/images`)
     .then(res => {

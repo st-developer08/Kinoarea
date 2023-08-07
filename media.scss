@@ -1,0 +1,334 @@
+@media only screen and (max-width: 1280px) {
+
+    .box_office,
+    .popular_films,
+    .expected_novelties,
+    .cards {
+
+        .title {
+            max-width: 230px;
+        }
+
+    }
+
+
+}
+
+@media only screen and (max-width: 1245px) {
+
+    .box_office,
+    .popular_films,
+    .expected_novelties,
+    .cards {
+
+        .title {
+            max-width: 200px;
+        }
+
+        .genres_cont {
+            max-width: 200px;
+        }
+
+    }
+
+
+    .subline {
+
+        .trailers_title {
+            h2 {
+                font-size: 25px;
+
+            }
+        }
+    }
+
+    .headline {
+        h2 {
+            font-size: 35px;
+        }
+
+        .splitLine {
+            width: 41px;
+        }
+
+        .tabs_period,
+        .tabs_time,
+        .tabs_country,
+        .tabs {
+            max-width: 400px;
+
+            li {
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: 500;
+                opacity: .5;
+                transition: .3s ease;
+
+                &:hover {
+                    background: #00000058;
+                    opacity: 1;
+                }
+            }
+
+            .active_tab {
+                background: #00000058;
+                opacity: 1;
+            }
+        }
+
+        margin-bottom: 40px;
+    }
+
+
+    .card {
+        height: 350px;
+    }
+
+    .popular_persons {
+
+        .person {
+            width: 305px;
+            height: 305px;
+        }
+    }
+
+    .other_persons {
+        min-width: 305px;
+        height: 305px;
+    }
+}
+
+
+
+@media only screen and (max-width: 1157px) {
+    .popular_persons {
+        gap: 28px;
+
+        .first_places {
+            gap: 28px;
+        }
+
+        .person {
+            width: 267px;
+            height: 267px;
+            padding: 10px;
+
+            .place {
+                font-size: 10px;
+            }
+
+            .current_name {
+                font-size: 18px;
+                font-weight: 600;
+            }
+
+            .origin_name {
+                font-size: 12px;
+            }
+
+            .age {
+                font-size: 10px;
+            }
+        }
+    }
+
+    .other_persons {
+        padding: 5px;
+
+        min-width: 267px;
+        height: 267px;
+
+        li {
+
+            padding: 15px;
+
+            .left {
+
+                flex-direction: column;
+
+                .current_name {
+                    font-size: 12px;
+                }
+
+                .origin_name {
+                    opacity: .5;
+                    font-size: 10px;
+                }
+
+                .age {
+                    font-size: 8px;
+                }
+            }
+
+            .right {
+                .place {
+                    font-size: 10px;
+                }
+            }
+        }
+    }
+
+    .card {
+        height: 300px;
+
+    }
+}
+
+@media only screen and (max-width: 1110px) {
+
+    .header {
+
+        padding: 20px 0;
+
+        .logo {
+
+            img {
+                width: 90px;
+            }
+        }
+
+
+    }
+
+    header {
+        margin-bottom: 20px;
+    }
+
+    .center {
+        .links {
+
+            gap: 15px;
+
+            li {
+                a {
+                    font-size: 10px;
+                }
+            }
+        }
+    }
+
+    .box_office,
+    .popular_films,
+    .expected_novelties,
+    .cards {
+
+        .title {
+            max-width: 180px;
+        }
+
+        .genres_cont {
+            max-width: 180px;
+        }
+
+    }
+
+    .headline {
+        .splitLine {
+            width: 35px;
+        }
+
+        .tabs_period,
+        .tabs_time,
+        .tabs_country,
+        .tabs {
+            gap: 10px;
+
+            li {
+                font-size: 10px;
+            }
+
+        }
+
+        margin-bottom: 30px;
+    }
+
+    .some_trailers {
+        padding: 10px;
+    }
+
+    .subline {
+        margin-bottom: 10px;
+
+    }
+}
+
+@media only screen and (max-width: 1035px) {
+
+    .box_office,
+    .popular_films,
+    .expected_novelties,
+    .cards {
+
+        .title {
+            max-width: 160px;
+        }
+
+        .genres_cont {
+            max-width: 160px;
+        }
+
+    }
+
+}
+
+@media only screen and (max-width: 990px) {
+    .header_one {
+        display: none;
+    }
+
+    .header_two {
+        display: block;
+
+        .left {
+            scale: .8;
+        }
+    }
+
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+        height: 360px;
+    }
+
+
+    .headline {
+
+        .splitLine {
+            display: none;
+        }
+
+        flex-direction: column;
+        align-items: start;
+        gap: 20px;
+
+        .tabs_period,
+        .tabs_time,
+        .tabs_country,
+        .tabs {
+            max-width: 100%;
+
+            li {
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: 500;
+                opacity: .5;
+                transition: .3s ease;
+
+                &:hover {
+                    background: #00000058;
+                    opacity: 1;
+                }
+            }
+
+            .active_tab {
+                background: #00000058;
+                opacity: 1;
+            }
+        }
+
+    }
+}

@@ -1,13 +1,14 @@
 import { header } from "./modules/header";
 import { tabs } from "./modules/helpers";
 import { getDetails } from "./modules/https.request";
-import { img, reloadCards, reloadGenres, reloadOthers, reloadPersons, reloadTrailers } from "./modules/reload";
+import { reloadCards, reloadGenres, reloadOthers, reloadPersons, reloadTrailers } from "./modules/reload";
 import { scrollToX, scrollToY } from "./modules/scrollFunction";
 import { scrollToTop } from "./modules/scrollToTop";
 
 let body = document.body
-scrollToTop(body)
+
 header()
+scrollToTop(body)
 
 let search_result = document.querySelector(".search_result")
 let some_trailers = document.querySelector(".some_trailers")
@@ -17,42 +18,58 @@ let box_office = document.querySelector(".box_office")
 let all_new = document.querySelector(".all_new")
 let first_places = document.querySelector(".first_places")
 let other_persons = document.querySelector(".other_persons")
-    
-scrollToY(search_result)
 
+scrollToY(search_result)
 
 
 getDetails("/movie/now_playing")
     .then(res => {
-
-        reloadCards(res.data.results.slice(0, 8), cards)
         reloadTrailers(res.data.results, some_trailers)
+
+        function checkWindowSize() {
+
+            if (window.innerWidth > 990) {
+
+                reloadCards(res.data.results.slice(0, 8), cards)
+            } else {
+                reloadCards(res.data.results.slice(0, 9), cards)
+            }
+        }
+
+        checkWindowSize()
+
+        window.onresize = () => {
+            checkWindowSize()
+        }
+
 
         let cards_images = document.querySelectorAll(".card_img")
 
         bodyBack(cards_images)
 
 
-        all_new.onclick = () => {
+        all_new.onclick = (e) => {
             if (all_new.innerHTML === "All new") {
                 reloadCards(res.data.results, cards)
                 all_new.innerHTML = "Hide"
 
                 let cards_images = document.querySelectorAll(".card_img")
                 bodyBack(cards_images)
+                console.log(e.pageY);
                 window.scrollTo({
-                    top: 1830,
+                    top: e.pageY * 2.073 - 300,
                     behavior: 'smooth'
                 });
 
             } else {
+                console.log(e.pageY);
                 window.scrollTo({
-                    top: 510,
+                    top: e.pageY / 2.073 - 300,
                     behavior: 'smooth'
                 });
 
                 setTimeout(() => {
-                    reloadCards(res.data.results.slice(0, 8), cards)
+                    checkWindowSize()
                     all_new.innerHTML = "All new"
 
                     let cards_images = document.querySelectorAll(".card_img")
