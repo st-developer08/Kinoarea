@@ -2,6 +2,7 @@ import { formatDateToCustomFormat } from "../../modules/customFormatDate";
 import { header } from "../../modules/header";
 import { getDetails } from "../../modules/https.request";
 import { img } from "../../modules/reload";
+import { scrollToY } from "../../modules/scrollFunction";
 import { scrollToTop } from "../../modules/scrollToTop";
 
 header()
@@ -22,7 +23,7 @@ let popularity = document.querySelector(".popularity")
 let gender = document.querySelector(".gender")
 let actor_tabs = document.querySelectorAll(".actor_tabs span")
 let actor_bio_text = document.querySelector(".actor_bio p")
-
+scrollToY(actor_bio_text)
 getDetails(`/person/${person_id}`)
     .then(res => {
 

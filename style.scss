@@ -308,6 +308,14 @@ body {
             display: none;
         }
 
+        &:hover {
+            cursor: grab;
+        }
+
+        &:active {
+            cursor: grabbing;
+        }
+
         li {
             white-space: nowrap;
             padding: 10px;
@@ -526,7 +534,11 @@ body {
 
 
     .after {
-        display: none;
+        span {
+            scale: .5;
+        }
+
+        // display: none;
     }
 
     .card {
@@ -655,6 +667,14 @@ body {
     margin-bottom: 40px;
     transition: .3s ease;
 
+    &:hover {
+        cursor: grab;
+    }
+
+    &:active {
+        cursor: grabbing;
+    }
+
     &::-webkit-scrollbar {
         height: 7px;
         width: 10px;
@@ -679,6 +699,13 @@ body {
         flex-direction: column;
         gap: 10px;
         align-items: start;
+
+        min-width: 300px;
+        overflow: hidden;
+
+        .trailer_title {
+            white-space: nowrap;
+        }
 
         .trailer_img {
             cursor: pointer;
@@ -781,6 +808,8 @@ body {
     }
 
     .person {
+        cursor: pointer;
+        border-radius: 10px;
         position: relative;
         width: 340px;
         height: 340px;
@@ -816,6 +845,12 @@ body {
             font-size: 12px;
             color: yellow;
         }
+
+        transition: .3s ease;
+
+        &:hover {
+            opacity: .8;
+        }
     }
 }
 
@@ -828,18 +863,35 @@ body {
     height: 340px;
     background: #1B2133;
     overflow: auto;
+    border-radius: 10px;
 
     &::-webkit-scrollbar {
         display: none;
     }
 
+
+
     li {
+        cursor: pointer;
         @include flex();
         justify-content: space-between;
         width: 100%;
         padding: 16px;
         border-radius: 10px;
         border-bottom: 1px solid #1E2538;
+        transition: .3s ease;
+
+        &:hover {
+            background: #222940;
+        }
+
+        &:active {
+            cursor: grabbing;
+        }
+
+        &:hover {
+            background: #222940;
+        }
 
         .left {
             @include flex();
@@ -882,8 +934,8 @@ body {
         flex-direction: column;
         border-radius: 10px;
         background-image: linear-gradient(to top, rgba(0, 0, 0, 0.73), rgba(245, 246, 252, 0), rgba(245, 246, 252, 0), rgba(0, 0, 0, 0.73)),
-            url("https://s3-alpha-sig.figma.com/img/f440/bd7b/abb2db987a1bf441fac3fa1d7de4e466?Expires=1691366400&Signature=j02rne8iD5G0xhmPRieOI0nDcbuTNPqAbKelx2WMhtDlhchDSvo8TKwICmXgWDJuie2apnx5B5msbhn-gOMXD3n3ZfeQsKViTsFcgh9CDInulP0z9rLZkHfMp~0BmjyxCzM31R4vukG2FgsMFL0HneIHkkzLbXe1So5WSVs77R2LGIzt-sJ~Utm26tth~LlqFHz2CozKx8tdhKg0Fl6ovtKqIHaoAqbRCnAeifd4-ylKU08tTlSosGO5RlHgFVo0aMTKZLfrKwxyjJGh8ivySUGcmwbi08UZq9t8vVfVhdJAQUtIKCUSSwP~JFNq28NLGzWmHaiIOO-Gaxcm1uxrJg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4");
-        background-position: center;
+            url("/public/images/image\ news.png");
+        background-position: top;
         background-size: cover;
         background-repeat: no-repeat;
     }
@@ -1152,7 +1204,7 @@ center {
     background: #100F14;
     background-image: url("/icons/arrow.svg");
     background-position: center;
-    size: 50%;
+    background-size: 50%;
     rotate: -90deg;
     background-repeat: no-repeat;
     transition: .3s ease;

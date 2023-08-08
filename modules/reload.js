@@ -62,7 +62,7 @@ export function reloadCards(arr, place, isSwiper) {
         after.append(span)
         place.append(card)
 
-        span.onclick = () => {
+        after.onclick = () => {
             window.open('/pages/movies/?id=' + item.id, "_blank")
         }
 
@@ -202,6 +202,10 @@ export function reloadPersons(arr, cont) {
 
         person.append(place, current_name, origin_name, age)
         cont.append(person)
+
+        person.onclick = () => {
+            window.open('/pages/persons/?id=' + item.id, "_blank")
+        }
     }
 
 }
@@ -234,6 +238,10 @@ export function reloadOthers(arr, cont) {
         left.append(current_name, origin_name, age)
         right.append(place)
         cont.append(li)
+        li.onclick = () => {
+            console.log(item);
+            window.open('/pages/persons/?id=' + item.id, "_blank")
+        }
     }
 }
 

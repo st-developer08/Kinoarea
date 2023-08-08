@@ -69,6 +69,8 @@
     position: relative;
 
     p {
+        border-radius: 7px;
+        padding: 5px;
         padding-bottom: 20px;
         line-height: 20px;
         height: 121px;
@@ -77,6 +79,11 @@
 
         &::-webkit-scrollbar {
             display: none;
+        }
+
+        cursor: grab;
+        &:active {
+            cursor: grabbing;
         }
 
     }

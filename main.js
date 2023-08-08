@@ -37,11 +37,8 @@ getDetails("/movie/now_playing")
         }
 
         checkWindowSize()
-
-        window.onresize = () => {
-            checkWindowSize()
-        }
-
+        
+        window.addEventListener('resize', checkWindowSize)
 
         let cards_images = document.querySelectorAll(".card_img")
 
@@ -99,11 +96,39 @@ function bodyBack(arr) {
 
 }
 getDetails("/movie/upcoming")
-    .then(res => reloadCards(res.data.results.slice(14, 18), expected_novelties))
+    .then(res => {
+        function checkWindowSize() {
+
+            if (window.innerWidth > 990) {
+                reloadCards(res.data.results.slice(14, 18), expected_novelties)
+            } else {
+                reloadCards(res.data.results.slice(14, 17), expected_novelties)
+            }
+        }
+
+        checkWindowSize()
+
+        window.addEventListener('resize', checkWindowSize)
+
+    }
+    )
 
 getDetails(`/movie/popular`)
     .then(res => {
-        reloadCards(res.data.results.slice(0, 4), popular_films, true)
+        function checkWindowSize() {
+
+            if (window.innerWidth > 990) {
+
+                reloadCards(res.data.results.slice(0, 4), popular_films, true)
+            } else {
+                reloadCards(res.data.results.slice(0, 3), popular_films, true)
+            }
+        }
+
+        checkWindowSize()
+
+        window.addEventListener('resize', checkWindowSize)
+
         reloadCards(res.data.results.slice(15, 20), box_office)
         scrollToX(some_trailers)
     })
