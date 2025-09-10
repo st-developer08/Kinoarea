@@ -152,7 +152,7 @@ export function reloadActors(arr, place) {
 
 export function getRandomElements(arr, count) {
     if (count >= arr.length) {
-        return arr.slice(); // Возвращаем копию исходного массива, если требуемое количество элементов больше или равно длине массива
+        return arr.slice(); 
     }
 
     const randomIndexes = [];
@@ -296,7 +296,7 @@ export function reloadGenres(arr, place) {
 
     let all = document.createElement("li")
     all.className = "active_tab"
-    all.innerHTML = "All"
+    all.innerHTML = "Все"
     all.id = "all"
 
 

@@ -1,3 +1,6 @@
+*{
+    font-family: "Qanelas";
+}
 @mixin flex {
     display: flex;
     justify-content: center;
@@ -6,7 +9,7 @@
 
 .actor_tabs,
 .actor_info {
-    font-size: 12px;
+    font-size: 16px;
     @include flex();
 }
 
@@ -47,7 +50,7 @@
 .actor_info {
     @include flex();
     flex-direction: column;
-    font-size: 12px;
+    font-size: 16px;
     gap: 10px;
     align-items: start;
 
@@ -73,10 +76,7 @@
         padding: 5px;
         padding-bottom: 20px;
         line-height: 20px;
-        height: 121px;
-        width: 632px;
         overflow: auto;
-
         &::-webkit-scrollbar {
             display: none;
         }

@@ -26,16 +26,7 @@ body {
         background-color: rgba(0, 0, 0, 0.1);
     }
 
-    // &::after {
-    //     content: "";
-    //     display: block;
-    //     width: 100%;
-    //     height: 500px;
-    //     position: absolute;
-    //     bottom: 0px;
-    //     z-index: -1;
-    //     background: linear-gradient(transparent, #1E2538);
-    // }
+   
 
     &::before {
         content: "";
@@ -550,6 +541,10 @@ button {
     }
 }
 
+.sign_in{
+    text-align: center
+}
+
 .similar_films {
     @include flex();
     justify-content: space-between;
@@ -561,7 +556,7 @@ button {
         gap: 7px;
         width: 100%;
         max-width: 250.401px;
-
+        margin-bottom: 50px;
 
         .card_img {
             position: relative;

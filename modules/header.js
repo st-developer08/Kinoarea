@@ -1,6 +1,4 @@
-import {
-    getDetails
-} from "./https.request"
+import { getDetails } from "./https.request"
 import { reloadSearch } from "./reload"
 
 export function header() {
@@ -28,13 +26,12 @@ export function header() {
         "twitter"
     ]
     let links_text = [
-        "Poster",
-        "Media",
-        "Filters",
-        "Actors",
-        "News",
-        "Collections",
-        "Categories"
+        { text: "Афиша", id: "now_in_cinema" },
+        { text: "Медиа", id: "popular_movies" },
+        { text: "Фильмы", id: "expected_novelties" },
+        { text: "Актёры", id: "popular_persons" },
+        { text: "Новости", id: "last_news" },
+        { text: "Подборки", id: "box_office" },
     ]
 
     for (let icon of social_icons) {
@@ -71,26 +68,23 @@ export function header() {
     let center_two = document.createElement("nav")
     let links_two = document.createElement("ul")
 
-    for (let text of links_text) {
-
+    for (let { text, id } of links_text) {
         let li = document.createElement("li")
         let a = document.createElement("a")
 
-        a.innerHTML = `${text}`
-        a.href = `#`
+        a.innerHTML = text
+        a.href = `#${id}`
 
         li.append(a)
         links.append(li)
-
     }
 
-    for (let text of links_text) {
-
+    for (let { text, id } of links_text) {
         let li = document.createElement("li")
         let a = document.createElement("a")
 
-        a.innerHTML = `${text}`
-        a.href = `#`
+        a.innerHTML = text
+        a.href = `#${id}`
 
         li.append(a)
         links_two.append(li)
@@ -117,13 +111,11 @@ export function header() {
     let img_search = document.createElement("img")
     let search_result = document.createElement("div")
 
-    search_canvas.classList.add("search_canvas")
-    search_canvas.classList.add("close")
+    search_canvas.classList.add("search_canvas", "close")
     modal_search.classList.add("modal_search")
     cinema.classList.add("cinema")
     search_cont.classList.add("search_cont")
-    search_close.classList.add("search_close")
-    search_close.classList.add("close")
+    search_close.classList.add("search_close", "close")
     search_result.classList.add("search_result")
 
     cinema.src = "/icons/cinema.svg"
@@ -159,7 +151,6 @@ export function header() {
     logo_img_two.alt = "logo"
 
     ul_social.className = "social"
-    
     ul_social_two.className = "social"
 
     center.className = "center"
@@ -175,11 +166,11 @@ export function header() {
     search_two.type = "text"
 
     sign_in.className = "sign_in"
-    sign_in.innerHTML = "Sign in"
+    sign_in.innerHTML = "Войти"
     
     sign_in_two.className = "sign_in"
-    sign_in_two.innerHTML = "Sign in"
-    
+    sign_in_two.innerHTML = "Войти"
+
     header.append(container)
     container.append(inner_header)
     inner_header.append(left, center, right)
@@ -193,12 +184,10 @@ export function header() {
     logo_two.append(logo_img_two)
 
     center.append(links)
-
     center_two.append(sign_in_two)
     sub_header.append(links_two)
 
     right.append(search, sign_in)
-
     right_two.append(search_two)
 
     body.prepend(header,header_two, modal_search, search_canvas)
@@ -208,14 +197,10 @@ export function header() {
     }
 
     button_filter.onclick = () => {
-        if (button_filter.id === "movie") {
-            button_filter.id = "person"
-        } else {
-            button_filter.id = "movie"
-        }
-        console.log(button_filter.id);
+        button_filter.id = (button_filter.id === "movie") ? "person" : "movie"
     }
-   [search ,search_two].forEach(btn=>{
+
+    ;[search ,search_two].forEach(btn=>{
        btn.onclick = () => {
            modal_search.style.display = "flex"
            search_canvas.style.display = "block"
@@ -229,7 +214,6 @@ export function header() {
    })
 
     let close_btns = document.querySelectorAll(".close")
-
     close_btns.forEach(btn => {
         btn.onclick = () => {
             body.style.overflowY = "auto"
@@ -245,7 +229,6 @@ export function header() {
     })
 
     let val
-
     input.onkeyup = (e) => {
         val = input.value.toLowerCase().trim()
         if (e.key === "Enter") {
@@ -263,28 +246,42 @@ export function header() {
                 reloadSearch(res.data.results, place, filter)
             })
     }
-}
 
-        // /3/search/movie
-        // function debounce(func, timeout = 300) {
-        //     let timer;
-        //     return (...args) => {
-        //         clearTimeout(timer);
-        //         timer = setTimeout(() => {
-        //             func.apply(this, args);
-        //         }, timeout);
-        //     };
-        // }
-    
-        // function getData() {
-        //     let val = search.value.toLowerCase().trim()
-    
-        //     if (!val) return
-    
-        // getDetails(`/search/person?query=${val}`)
-        //     .then(res => console.log(res))
-    
-        // getDetails(`/search/movie?query=${val}`)
-        //     .then(res => console.log(res))
-        // }
-        // search.onkeyup = debounce(() => getData())
+    function smoothScrollTo(targetY, duration = 600) {
+        const startY = window.scrollY;
+        const distanceY = targetY - startY;
+        let startTime = null;
+
+        function animation(currentTime) {
+            if (!startTime) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+
+            const ease = progress < 0.5
+                ? 4 * progress * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+            window.scrollTo(0, startY + distanceY * ease);
+
+            if (timeElapsed < duration) {
+                requestAnimationFrame(animation);
+            }
+        }
+
+        requestAnimationFrame(animation);
+    }
+
+    document.addEventListener("click", (e) => {
+        const a = e.target.closest('a[href^="#"]');
+        if (!a) return;
+
+        const id = a.getAttribute("href").slice(1);
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        e.preventDefault();
+
+        const targetY = target.getBoundingClientRect().top + window.pageYOffset;
+        smoothScrollTo(targetY, 1000);
+    })
+}

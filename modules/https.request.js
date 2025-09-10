@@ -1,56 +1,59 @@
-import axios from "axios"
+import axios from "axios";
 
-const baseURL =
-    import.meta.env.VITE_BASE_URL
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const enums = {
-    get: "get",
-    post: "post",
-    patch: "patch",
-    put: "put",
-    delete: "delete"
-}
+  get: "get",
+  post: "post",
+  patch: "patch",
+  put: "put",
+  delete: "delete"
+};
 
 export const useHttp = () => {
-    const request = async (url, method, body = null) => {
-        if (!enums[method]) {
-            throw new Error('Axios have not provide method ' + method)
-        }
-
-        try {
-            const res = await axios[method](baseURL + url, body, {
-                headers: {
-                    accept: 'application/json',
-                    Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`
-                }
-            })
-
-            if (res.status === 200 || res.status === 201) {
-                return res
-            }
-        } catch (e) {
-
-            return e
-        }
+  const request = async (url, method, body = null) => {
+    if (!enums[method]) {
+      throw new Error("Axios have not provide method " + method);
     }
 
-    return {
-        request
-    }
-}
+    try {
+      const res = await axios[method](baseURL + url, body, {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`
+        },
+        params: {
+          language: import.meta.env.VITE_LANG || "ru-RU"
+        }
+      });
 
+      if (res.status === 200 || res.status === 201) {
+        return res;
+      }
+    } catch (e) {
+      return e;
+    }
+  };
+
+  return {
+    request
+  };
+};
 
 export let getDetails = async (path) => {
-    try {
-        const res = await axios.get(baseURL + path, {
-            headers: {
-                Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-                Accept: 'application/json'
-            }
-        })
+  try {
+    const res = await axios.get(baseURL + path, {
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+        Accept: "application/json"
+      },
+      params: {
+        language: import.meta.env.VITE_LANG || "ru-RU"
+      }
+    });
 
-        return res
-    } catch (e) {
-        console.log(e);
-    }
-}
+    return res;
+  } catch (e) {
+    console.log(e);
+  }
+};
