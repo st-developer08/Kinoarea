@@ -32,7 +32,6 @@ export function reloadCards(arr, place, isSwiper) {
         rate.innerHTML = item.vote_average.toFixed(2)
 
         after.className = "after"
-        span.innerHTML = "Movie card"
 
         title.className = "title"
         title.innerHTML = item.title

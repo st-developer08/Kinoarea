@@ -285,3 +285,9 @@ export function header() {
         smoothScrollTo(targetY, 1000);
     })
 }
+
+
+// sign_in.addEventListener('click',(e) => {
+
+// })
+
